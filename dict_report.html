@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang='ru'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Словарь — hotels_dictionaries_23032026</title>
+<link href='https://fonts.googleapis.com/css2?family=PT+Root+UI:wght@300;400;500;700&display=swap' rel='stylesheet'>
+<style>
+
+:root{
+  --g:#21A038;--gd:#0d4d1a;--gm:#1a7d2c;--gl:#e8f7ec;--gp:#f2faf4;
+  --y:#f5a623;--r:#d0021b;--b:#0077cc;--pu:#7c3aed;
+  --tx:#1a1a1a;--mu:#6b7280;--lt:#9ca3af;--br:#e5e7eb;
+  --bg:#f8f9fa;--wh:#fff;
+  --f:'PT Root UI',-apple-system,sans-serif;
+  --sh0:0 1px 3px rgba(0,0,0,.08);--sh1:0 4px 16px rgba(0,0,0,.1);
+  --r8:8px;--r12:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.5;font-size:14px}
+.hdr{background:linear-gradient(135deg,var(--gd) 0%,var(--gm) 45%,var(--g) 100%);color:#fff;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.04);width:420px;height:420px;top:-80px;right:-60px;pointer-events:none}
+.hdr-inner{max-width:1200px;margin:0 auto;padding:30px 32px 26px;display:flex;align-items:center;gap:20px;position:relative;z-index:1;flex-wrap:wrap}
+.hdr-info{flex:1;min-width:200px}
+.hdr-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:3px 12px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.hdr-badge .dot{width:6px;height:6px;border-radius:50%;background:#a3cd39;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hdr h1{font-size:clamp(17px,3vw,24px);font-weight:700;letter-spacing:-.02em;margin-bottom:4px}
+.hdr-meta{font-size:12px;opacity:.8;display:flex;gap:14px;flex-wrap:wrap}
+.hdr-nums{display:flex;gap:2px;flex-wrap:wrap}
+.hdr-num{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:var(--r8);padding:10px 14px;text-align:center;min-width:80px}
+.hdr-num-v{font-size:18px;font-weight:700;letter-spacing:-.03em;display:block}
+.hdr-num-l{font-size:9px;opacity:.7;text-transform:uppercase;letter-spacing:.06em}
+.nav{background:var(--wh);border-bottom:1px solid var(--br);position:sticky;top:0;z-index:100;box-shadow:var(--sh0)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;overflow-x:auto}
+.nav-a{padding:11px 15px;font-size:13px;font-weight:500;color:var(--mu);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.2s;text-decoration:none;display:block}
+.nav-a:hover,.nav-a.on{color:var(--g)}
+.nav-a.on{border-bottom-color:var(--g)}
+.main{max-width:1200px;margin:0 auto;padding:26px 32px 64px}
+.sec{margin-bottom:42px}
+.sec-ttl{font-size:17px;font-weight:700;letter-spacing:-.01em;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-ttl .n{background:var(--g);color:#fff;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--wh);border:1px solid var(--br);border-radius:var(--r12);box-shadow:var(--sh0);overflow:hidden}
+.card-h{padding:10px 16px;border-bottom:1px solid var(--br);font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;background:var(--gp)}
+.card-b{padding:14px}
+.kpi{background:var(--wh);border:1px solid var(--br);border-radius:var(--r12);padding:14px 16px;box-shadow:var(--sh0);position:relative;overflow:hidden;transition:.2s}
+.kpi:hover{box-shadow:var(--sh1);transform:translateY(-1px)}
+.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.kpi.g::after{background:var(--g)}.kpi.y::after{background:var(--y)}.kpi.b::after{background:var(--b)}.kpi.pu::after{background:var(--pu)}.kpi.r::after{background:var(--r)}
+.kpi-l{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--mu);margin-bottom:4px}
+.kpi-v{font-size:24px;font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:3px}
+.kpi.g .kpi-v{color:var(--g)}.kpi.y .kpi-v{color:var(--y)}.kpi.b .kpi-v{color:var(--b)}.kpi.pu .kpi-v{color:var(--pu)}.kpi.r .kpi-v{color:var(--r)}
+.kpi-s{font-size:11px;color:var(--mu)}
+.br{display:grid;grid-template-columns:180px 1fr 72px;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--br)}
+.br:last-child{border-bottom:none}
+.br:hover{background:var(--gl);margin:0 -14px;padding-left:14px;padding-right:14px;border-radius:4px}
+.br-l{font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.br-t{height:7px;background:#eef0f2;border-radius:4px;overflow:hidden}
+.br-f{height:100%;border-radius:4px}
+.br-v{font-size:11px;color:var(--mu);text-align:right}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--gp)}
+th{padding:8px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);border-bottom:2px solid var(--br);white-space:nowrap}
+td{padding:7px 12px;border-bottom:1px solid var(--br)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--gl)}
+.tr{text-align:right}.tm{color:var(--mu);text-align:right}
+.bdg{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.bdg-ha{background:#e8f7ec;color:var(--g)}
+.bdg-ra{background:#fff8ec;color:#b87a00}
+.bdg-ci{background:#eff6ff;color:var(--b)}
+.bdg-ot{background:#f3f4f6;color:var(--mu)}
+.entry{background:var(--gp);border:1px solid #c8e6cf;border-left:4px solid var(--g);border-radius:var(--r8);padding:10px 14px;margin-bottom:8px}
+.entry-key{font-weight:700;font-size:14px;margin-bottom:4px}
+.entry-cat{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;margin-bottom:6px}
+.entry-syns{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.syn-tag{background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px}
+.entry-id{font-family:monospace;font-size:10px;color:var(--lt);margin-top:5px}
+.sq{background:var(--wh);border:1px solid var(--br);border-radius:var(--r12);margin-bottom:10px;overflow:hidden;box-shadow:var(--sh0)}
+.sq-h{background:var(--gp);padding:9px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--br);flex-wrap:wrap}
+.sq-n{background:var(--g);color:#fff;font-size:11px;font-weight:700;width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sq-t{font-size:13px;font-weight:600;flex:1;min-width:120px}
+.sq-ms{display:flex;gap:6px;flex-wrap:wrap}
+.sq-m{background:var(--wh);border:1px solid var(--br);border-radius:5px;padding:2px 7px;font-size:11px;color:var(--mu)}
+.sq-m strong{color:var(--tx)}
+.sq-body{padding:8px 14px;display:flex;flex-direction:column;gap:6px}
+.sq-r{padding:8px 10px;border-radius:6px;background:#fafafa;border:1px solid transparent;transition:.15s}
+.sq-r:hover{background:var(--gl);border-color:#c8e6cf}
+.sq-r-top{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sq-rk{font-size:11px;color:var(--lt);width:16px;flex-shrink:0}
+.sq-nm{font-size:13px;font-weight:600;flex:1}
+.sq-sc{font-size:12px;font-weight:700}
+.sc-hi{color:var(--g)}.sc-md{color:var(--y)}.sc-lo{color:var(--r)}
+.sq-syns{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.sq-syn{background:var(--wh);border:1px solid var(--br);border-radius:12px;padding:1px 7px;font-size:11px;color:var(--mu)}
+.sq-more{font-size:11px;color:var(--lt);font-style:italic}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--br);border:1px solid var(--br);border-radius:var(--r12);overflow:hidden}
+@media(max-width:700px){.fg{grid-template-columns:1fr}}
+.fg-row{background:var(--wh);padding:8px 14px;display:grid;grid-template-columns:200px 1fr 58px 12px;align-items:center;gap:8px;transition:.15s}
+.fg-row:hover{background:var(--gl)}
+.fg-field{font-size:11px;font-family:monospace;overflow:hidden;text-overflow:ellipsis}
+.fg-mini{height:5px;background:#eef0f2;border-radius:3px;overflow:hidden}
+.fg-bar{height:100%;border-radius:3px}
+.fg-pct{font-size:11px;text-align:right;font-weight:600}
+.fg-dot{width:7px;height:7px;border-radius:50%}
+footer{border-top:1px solid var(--br);padding:20px 0;margin-top:28px;text-align:center;font-size:12px;color:var(--mu)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:#c8e6cf;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--g)}
+
+</style>
+</head>
+<body>
+
+<div class='hdr'>
+  <div class='hdr-inner'>
+    <div><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48">
+  <defs>
+    <linearGradient id="hd" x1="5.82" x2="10.35" y1="18.55" y2="17.93" gradientTransform="matrix(4.76,0,0,2.87,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#A3CD39" offset=".12"/><stop stop-color="#86C339" offset=".28"/><stop stop-color="#21A038" offset=".87"/></linearGradient>
+    <linearGradient id="he" x1="2.28" x2="6.28" y1="2.9" y2="1.98" gradientTransform="matrix(4.76,0,0,2.87,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#0FA8E0" offset=".06"/><stop stop-color="#0099F9" offset=".54"/><stop stop-color="#0291EB" offset=".92"/></linearGradient>
+    <linearGradient id="hf" x1="2.86" x2="1.92" y1="10.44" y2="5.94" gradientTransform="matrix(2.87,0,0,4.76,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#F2E913" offset=".14"/><stop stop-color="#CADB26" offset=".58"/><stop stop-color="#A3CD39" offset=".89"/></linearGradient>
+    <linearGradient id="ha" x1="1.83" x2="2.98" y1="6.7" y2="2.12" gradientTransform="matrix(2.99,0,0,4.57,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#A3CD39" offset=".07"/><stop stop-color="#81C55F" offset=".26"/><stop stop-color="#0FA8E0" offset=".92"/></linearGradient>
+    <linearGradient id="hb" x1="2.1" x2="6.48" y1="16.89" y2="17.96" gradientTransform="matrix(4.57,0,0,2.99,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#F2E913" offset=".13"/><stop stop-color="#BBD62D" offset=".8"/><stop stop-color="#A3CD39" offset=".98"/></linearGradient>
+    <linearGradient id="hc" x1="5.82" x2="9.63" y1="1.7" y2="2.38" gradientTransform="matrix(4.84,0,0,2.82,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#0291EB" offset=".06"/><stop stop-color="#0C8ACB" offset=".79"/></linearGradient>
+  </defs>
+  <path d="m62.45 22.14 3.52 5.83-26.66 19.67-11.19-7.04v-8.42l11.14 6.98z" fill="#21a038"/>
+  <path d="m16.75 40.02c0-.4 0-.75.06-1.15l-6.75-.35c0 .46-.06.98-.06 1.44 0 8.08 3.29 15.41 8.6 20.71l4.79-4.79c-4.1-4.04-6.64-9.64-6.64-15.87z" fill="url(#hf)"/>
+  <path d="m39.25 17.52c.4 0 .75 0 1.15.06l.35-6.75c-.46 0-.98-.06-1.44-.06-8.08 0-15.41 3.29-20.71 8.6l4.79 4.79c4.04-4.1 9.69-6.64 15.86-6.64z" fill="url(#he)"/>
+  <path d="m39.25 62.53c-.4 0-.75 0-1.15-.06l-.35 6.75c.46 0 .98.06 1.44.06 8.08 0 15.41-3.29 20.71-8.6l-4.79-4.79c-4.04 4.15-9.64 6.64-15.86 6.64z" fill="url(#hd)"/>
+  <path d="m51.95 21.45 5.71-4.21c-5.02-4.04-11.42-6.52-18.41-6.52v6.75c4.73.06 9.12 1.5 12.7 3.98z" fill="url(#hc)"/>
+  <path d="m68.56 40.02c0-1.79-.17-3.52-.46-5.25l-6.29 4.67v.58c0 6.64-2.88 12.58-7.44 16.67l4.56 5.02c5.89-5.31 9.63-13.1 9.63-21.69z" fill="#21a038"/>
+  <path d="m39.25 62.53c-6.64 0-12.58-2.88-16.68-7.44l-5.02 4.56c5.37 5.94 13.1 9.64 21.7 9.64z" fill="url(#hb)"/>
+  <path d="m24.19 23.35-4.56-5.02c-5.94 5.37-9.64 13.1-9.64 21.69h6.75c0-6.58 2.88-12.58 7.45-16.67z" fill="url(#ha)"/>
+</svg></div>
+    <div class='hdr-info'>
+      <div class='hdr-badge'><span class='dot'></span>Коллекция активна</div>
+      <h1>Словарная коллекция — аналитика</h1>
+      <div class='hdr-meta'>
+        <span>📦 hotels_dictionaries_23032026</span>
+        <span>🗓 26.03.2026 16:08</span>
+        <span>⚡ GigaChat EmbeddingsGigaR</span>
+      </div>
+    </div>
+    <div class='hdr-nums'>
+      <div class='hdr-num'><span class='hdr-num-v' id='kpi-total'>…</span><span class='hdr-num-l'>Всего</span></div>
+      <div class='hdr-num'><span class='hdr-num-v' id='kpi-c0'>…</span><span class='hdr-num-l' id='kpi-c0-lbl'>cat 1</span></div>
+      <div class='hdr-num'><span class='hdr-num-v' id='kpi-c1'>…</span><span class='hdr-num-l' id='kpi-c1-lbl'>cat 2</span></div>
+      <div class='hdr-num'><span class='hdr-num-v' id='kpi-c2'>…</span><span class='hdr-num-l' id='kpi-c2-lbl'>cat 3</span></div>
+      <div class='hdr-num'><span class='hdr-num-v' id='kpi-c3'>…</span><span class='hdr-num-l' id='kpi-c3-lbl'>cat 4</span></div>
+    </div>
+  </div>
+</div>
+
+<div class='nav'>
+  <div class='nav-inner'>
+    <a class='nav-a on' data-sec='sec-fill'>Заполненность</a>
+    <a class='nav-a'    data-sec='sec-cats'>По категориям</a>
+    <a class='nav-a'    data-sec='sec-syndist'>Синонимы</a>
+    <a class='nav-a'    data-sec='sec-rich'>Богатые / бедные</a>
+    <a class='nav-a'    data-sec='sec-search'>Поиск</a>
+  </div>
+</div>
+
+<div class='main'>
+
+<div id='sec-fill' class='sec'>
+  <div class='sec-ttl'><span class='n'>1</span>Заполненность полей</div>
+  <div id='fill-section'>Загрузка...</div>
+</div>
+
+<div id='sec-cats' class='sec'>
+  <div class='sec-ttl'><span class='n'>2</span>Статистика по категориям</div>
+  <div id='cat-section'>Загрузка...</div>
+</div>
+
+<div id='sec-syndist' class='sec'>
+  <div class='sec-ttl'><span class='n'>3</span>Распределение по количеству синонимов</div>
+  <div class='card'><div class='card-b' id='syndist-section'>Загрузка...</div></div>
+</div>
+
+<div id='sec-rich' class='sec'>
+  <div class='sec-ttl'><span class='n'>5</span>Записи по наполненности синонимами</div>
+  <div class='g2'>
+    <div>
+      <div style='font-weight:600;font-size:13px;color:var(--g);margin-bottom:10px'>🏆 Наибольшее число синонимов</div>
+      <div id='richest-section'>Загрузка...</div>
+    </div>
+    <div>
+      <div style='font-weight:600;font-size:13px;color:var(--r);margin-bottom:10px'>⚠ Наименьшее число синонимов</div>
+      <div id='poorest-section'>Загрузка...</div>
+    </div>
+  </div>
+</div>
+
+<div id='sec-search' class='sec'>
+  <div class='sec-ttl'><span class='n'>6</span>Тестирование векторного поиска</div>
+  <div id='search-section'>Загрузка...</div>
+</div>
+
+</div><!-- /main -->
+
+<footer>hotels_dictionaries_23032026 · 26.03.2026 16:08 · GigaChat EmbeddingsGigaR</footer>
+
+<script>
+
+const R = {"metadata": {"generated_at": "2026-03-26T16:08:32.716740", "collection_name": "hotels_dictionaries_23032026", "total_points": 3315, "points_analyzed": 3315, "elapsed_sec": 0.78, "embedding_model": "GigaChat EmbeddingsGigaR", "known_categories": ["hotel-amenities", "room-amenities", "city"]}, "total": 3315, "all_categories": ["city", "accommodation", "hotel_amenity", "room_amenity", "room_class"], "fill_summary": {"key": {"filled": 3315, "filled_pct": 100.0, "empty": 0, "null": 0}, "category": {"filled": 3315, "filled_pct": 100.0, "empty": 0, "null": 0, "found_categories": ["city", "accommodation", "hotel_amenity", "room_amenity", "room_class"]}, "synonyms": {"missing": 0, "missing_pct": 0.0, "empty_list": 0, "empty_list_pct": 0.0, "one_synonym": 7, "one_pct": 0.21, "many_synonyms": 3308, "many_pct": 99.79, "length_stats": {"count": 3315, "min": 1, "max": 64, "avg": 5.79, "p50": 6}}}, "category_stats": {"city": {"count": 3014, "entries": [{"id": "00137b74-3207-5d0f-ac6b-a61a537c85ea", "key": "д. Рушиново", "category": "city", "synonyms": ["деревня Рушиново", "село Рушиново", "поселение Рушиново", "д. Рушиново"], "syn_count": 4}, {"id": "001fc0cc-8172-51c4-ad33-761076312268", "key": "д. Медведево", "category": "city", "synonyms": ["деревня Медведево", "село Медведево", "посёлок Медведево", "д. Медведево"], "syn_count": 4}, {"id": "007273ab-71c6-5c4c-8694-3c2b9d570b6a", "key": "д. Космынка", "category": "city", "synonyms": ["деревня Космынка", "поселение Космынка", "село Космынка", "деревенька Космынка", "населенное место Космынка", "д. Космынка"], "syn_count": 6}, {"id": "007b8f88-ec49-5464-978d-c49aaf10ee97", "key": "пос. Подберезье", "category": "city", "synonyms": ["деревня Подберезье", "село Подберезье", "поселок Березовка", "деревня Березка", "поселение Подберезы", "пос. Подберезье"], "syn_count": 6}, {"id": "007c9a83-12de-5230-8a6e-feabd20a6774", "key": "пос. Чеховский", "category": "city", "synonyms": ["деревня Чеховская", "Чехово", "посёлок Чеховский", "Чехова деревня", "сельский населённый пункт Чеховский", "пос. Чеховский"], "syn_count": 6}], "no_synonyms": 0, "one_synonym": 6, "many_synonyms": 3008, "syn_length_stats": {"count": 3014, "min": 1, "max": 6, "avg": 5.66, "p50": 6.0}, "unique_keys": 3014, "top_keys": [{"key": "д. Рушиново", "count": 1}, {"key": "д. Медведево", "count": 1}, {"key": "д. Космынка", "count": 1}, {"key": "пос. Подберезье", "count": 1}, {"key": "пос. Чеховский", "count": 1}, {"key": "д. Шестово", "count": 1}, {"key": "пос. Челюскинский", "count": 1}, {"key": "д. Отнурок", "count": 1}, {"key": "д. Новожилово", "count": 1}, {"key": "д. Новое Аннино", "count": 1}, {"key": "д. Голубово", "count": 1}, {"key": "пос. Кротово", "count": 1}, {"key": "д. Таменгонт", "count": 1}, {"key": "пгт Верхнетуломский", "count": 1}, {"key": "Междуреченск", "count": 1}, {"key": "Сухум", "count": 1}, {"key": "пос. Ижевское", "count": 1}, {"key": "ст-ца Должанская", "count": 1}, {"key": "рп. Мошково", "count": 1}, {"key": "д. Котовицы", "count": 1}]}, "accommodation": {"count": 14, "entries": [{"id": "11d24378-2c5f-5571-b5ac-f01976f0d918", "key": "hostel", "category": "accommodation", "synonyms": ["гостиница эконом-класса", "хостел", "малобюджетный отель", "мотель", "гостиничный комплекс бюджетного класса", "hostel"], "syn_count": 6}, {"id": "4612e98d-cbae-579a-b174-451b64ba7d10", "key": "apartment", "category": "accommodation", "synonyms": ["квартира в доме", "жилое помещение", "апартаменты", "жильё", "жилая площадь", "apartment"], "syn_count": 6}, {"id": "4bab45dd-f91e-54ba-bfd7-e93cee73dcb5", "key": "villas-bungalows", "category": "accommodation", "synonyms": ["коттеджный поселок", "жилые комплексы", "туристические домики", "усадьбы с банями", "деревенский стиль жилье", "villas-bungalows"], "syn_count": 6}, {"id": "4e149a18-ae35-5905-8a97-69769d3743f7", "key": "camping", "category": "accommodation", "synonyms": ["туристическая база", "кемпинг", "палаточный городок", "лагерь под открытым небом", "стоянка для автофургонов", "camping"], "syn_count": 6}, {"id": "50d6210a-06e7-592a-a20b-232813e13bc7", "key": "camp", "category": "accommodation", "synonyms": ["лагерь отдыха", "палаточный городок", "кемпинг", "стоянка", "туристическая база", "camp"], "syn_count": 6}], "no_synonyms": 0, "one_synonym": 0, "many_synonyms": 14, "syn_length_stats": {"count": 14, "min": 6, "max": 6, "avg": 6, "p50": 6.0}, "unique_keys": 14, "top_keys": [{"key": "hostel", "count": 1}, {"key": "apartment", "count": 1}, {"key": "villas-bungalows", "count": 1}, {"key": "camping", "count": 1}, {"key": "camp", "count": 1}, {"key": "hotel", "count": 1}, {"key": "capsule-hotel", "count": 1}, {"key": "glamping", "count": 1}, {"key": "cottage", "count": 1}, {"key": "apart-hotel", "count": 1}, {"key": "resort", "count": 1}, {"key": "mini-hotel", "count": 1}, {"key": "guesthouse", "count": 1}, {"key": "bnb", "count": 1}]}, "hotel_amenity": {"count": 44, "entries": [{"id": "0e4343d8-1a20-50fb-bd80-522e4c3ffc69", "key": "transfer", "category": "hotel_amenity", "synonyms": ["перевозка", "трансферный сервис", "доставка", "транспортировка", "пересадка", "transfer"], "syn_count": 6}, {"id": "0ec69911-1623-590e-a7b7-01d8e28bb8eb", "key": "prayer-room", "category": "hotel_amenity", "synonyms": ["молельная комната", "место для молитвы", "домашний храм", "молитвенный зал", "помещение для молитв", "prayer-room"], "syn_count": 6}, {"id": "18de1c31-9371-5e8e-bc51-95f90b43b52d", "key": "ski-room", "category": "hotel_amenity", "synonyms": ["снежная комната", "спортзал для лыжников", "лыжный зал", "помещение для лыжников", "место для лыжного инвентаря", "ski-room"], "syn_count": 6}, {"id": "1b4ae176-f8be-5eb1-b11c-38a7960000b0", "key": "ramp", "category": "hotel_amenity", "synonyms": ["пандус", "наклонный съезд", "подъемник", "лестница с уклоном", "специальная площадка", "ramp"], "syn_count": 6}, {"id": "1bd4bba2-4fdf-5d36-bae8-9ee6f3daba3f", "key": "for-low-mobility", "category": "hotel_amenity", "synonyms": ["для маломобильных гостей", "инвалидные удобства", "доступность для инвалидов", "удобства для людей с ограниченными возможностями", "специальные условия для передвижения", "for-low-mobility"], "syn_count": 6}], "no_synonyms": 0, "one_synonym": 1, "many_synonyms": 43, "syn_length_stats": {"count": 44, "min": 1, "max": 6, "avg": 5.89, "p50": 6.0}, "unique_keys": 44, "top_keys": [{"key": "transfer", "count": 1}, {"key": "prayer-room", "count": 1}, {"key": "ski-room", "count": 1}, {"key": "ramp", "count": 1}, {"key": "for-low-mobility", "count": 1}, {"key": "breakfast", "count": 1}, {"key": "garage", "count": 1}, {"key": "elevator", "count": 1}, {"key": "banquet-hall", "count": 1}, {"key": "service-language-japanese", "count": 1}, {"key": "automatic-door", "count": 1}, {"key": "service-language-spanish", "count": 1}, {"key": "sauna", "count": 1}, {"key": "laundry", "count": 1}, {"key": "service-language-italian", "count": 1}, {"key": "24-hour-reception", "count": 1}, {"key": "service-language-turkish", "count": 1}, {"key": "spa", "count": 1}, {"key": "pool-allowed-with-children", "count": 1}, {"key": "service-language-vietnamese", "count": 1}]}, "room_amenity": {"count": 237, "entries": [{"id": "000e4084-43fa-5b99-b3e1-19963660f1c7", "key": "six-full-beds", "category": "room_amenity", "synonyms": ["шесть полных кроватей", "шестиразовое спальное место", "шесть полноценных кроватей", "шесть больших кроватей", "шесть просторных кроватей", "six-full-beds"], "syn_count": 6}, {"id": "010b6f59-475a-510b-8895-edbba3892f2f", "key": "tea-station", "category": "room_amenity", "synonyms": ["чайная комната", "чайный уголок", "чайная зона", "чайный бар", "чайный салон", "tea-station"], "syn_count": 6}, {"id": "0133897c-83b5-57bf-b1a6-23fec3a35fab", "key": "four-rooms", "category": "room_amenity", "synonyms": ["четырёхкомнатный", "четырехкомнатный", "апартаменты", "номер на четверых", "квартира в отеле", "four-rooms"], "syn_count": 6}, {"id": "01ce85c5-5be4-51be-8433-19b6f77234e5", "key": "window-protection", "category": "room_amenity", "synonyms": ["защита окон", "окна-баррикады", "антивандальные окна", "противовзломные окна", "оконные решетки", "window-protection"], "syn_count": 6}, {"id": "01fd8e09-4665-5898-ad63-bc57536eb187", "key": "balcony-with-deck-chair", "category": "room_amenity", "synonyms": ["балкон-солярий", "балкон-диванчик", "балкон-качалка", "балкон-витрина", "балкон-зона-отдыха", "balcony-with-deck-chair"], "syn_count": 6}], "no_synonyms": 0, "one_synonym": 0, "many_synonyms": 237, "syn_length_stats": {"count": 237, "min": 4, "max": 6, "avg": 5.97, "p50": 6}, "unique_keys": 237, "top_keys": [{"key": "six-full-beds", "count": 1}, {"key": "tea-station", "count": 1}, {"key": "four-rooms", "count": 1}, {"key": "window-protection", "count": 1}, {"key": "balcony-with-deck-chair", "count": 1}, {"key": "fan", "count": 1}, {"key": "steam-bath", "count": 1}, {"key": "shared-bathroom-on-floor-gr-anti", "count": 1}, {"key": "super-king-size-bed", "count": 1}, {"key": "coffee-maker", "count": 1}, {"key": "single-bed", "count": 1}, {"key": "shower-cabin", "count": 1}, {"key": "balcony", "count": 1}, {"key": "folding-sofa", "count": 1}, {"key": "mountain-view", "count": 1}, {"key": "information-card", "count": 1}, {"key": "chair-for-babies", "count": 1}, {"key": "wifi", "count": 1}, {"key": "projector", "count": 1}, {"key": "daily-press", "count": 1}]}, "room_class": {"count": 6, "entries": [{"id": "1e6e098b-7023-5aa2-9a7a-b2f59d0e3155", "key": "business", "category": "room_class", "synonyms": ["бизнес", "business", "executive", "деловой", "корпоративный", "для командировки", "офисный", "business class", "бизнес-класс", "бизнес+"], "syn_count": 49}, {"id": "85a3a14f-828a-57f7-bcac-f093759c7b39", "key": "economy", "category": "room_class", "synonyms": ["эконом", "бюджет", "базовый", "простой", "туристический", "туркласс", "койко-место", "койка", "спальное место", "место в номере"], "syn_count": 62}, {"id": "95e079ce-882b-581a-b052-69c48779b748", "key": "vip", "category": "room_class", "synonyms": ["vip", "ви-ай-пи", "представительский", "президентский", "presidential", "exclusive", "эксклюзив", "элитный", "элит", "royal"], "syn_count": 62}, {"id": "a287da01-e373-532a-9290-fa783109326c", "key": "luxury", "category": "room_class", "synonyms": ["люкс", "luxury", "deluxe", "делюкс", "де люкс", "de luxe", "suite", "сюит", "сьюит", "джуниор сюит"], "syn_count": 64}, {"id": "b910e1a1-be76-537f-bea1-68270bdbed2b", "key": "comfort", "category": "room_class", "synonyms": ["комфорт", "comfort", "улучшенный", "повышенной комфортности", "superior", "супериор", "суп", "плюс", "enhanced", "upgraded"], "syn_count": 52}], "no_synonyms": 0, "one_synonym": 0, "many_synonyms": 6, "syn_length_stats": {"count": 6, "min": 49, "max": 64, "avg": 58.17, "p50": 61.0}, "unique_keys": 6, "top_keys": [{"key": "business", "count": 1}, {"key": "economy", "count": 1}, {"key": "vip", "count": 1}, {"key": "luxury", "count": 1}, {"key": "comfort", "count": 1}, {"key": "standard", "count": 1}]}}, "top_keys": [{"key": "wifi", "count": 2, "pct": 0.06}, {"key": "elevator", "count": 2, "pct": 0.06}, {"key": "sauna", "count": 2, "pct": 0.06}, {"key": "safe", "count": 2, "pct": 0.06}, {"key": "six-full-beds", "count": 1, "pct": 0.03}, {"key": "д. Рушиново", "count": 1, "pct": 0.03}, {"key": "д. Медведево", "count": 1, "pct": 0.03}, {"key": "д. Космынка", "count": 1, "pct": 0.03}, {"key": "пос. Подберезье", "count": 1, "pct": 0.03}, {"key": "пос. Чеховский", "count": 1, "pct": 0.03}, {"key": "д. Шестово", "count": 1, "pct": 0.03}, {"key": "пос. Челюскинский", "count": 1, "pct": 0.03}, {"key": "д. Отнурок", "count": 1, "pct": 0.03}, {"key": "д. Новожилово", "count": 1, "pct": 0.03}, {"key": "д. Новое Аннино", "count": 1, "pct": 0.03}, {"key": "д. Голубово", "count": 1, "pct": 0.03}, {"key": "tea-station", "count": 1, "pct": 0.03}, {"key": "пос. Кротово", "count": 1, "pct": 0.03}, {"key": "д. Таменгонт", "count": 1, "pct": 0.03}, {"key": "пгт Верхнетуломский", "count": 1, "pct": 0.03}, {"key": "Междуреченск", "count": 1, "pct": 0.03}, {"key": "four-rooms", "count": 1, "pct": 0.03}, {"key": "Сухум", "count": 1, "pct": 0.03}, {"key": "пос. Ижевское", "count": 1, "pct": 0.03}, {"key": "ст-ца Должанская", "count": 1, "pct": 0.03}, {"key": "рп. Мошково", "count": 1, "pct": 0.03}, {"key": "д. Котовицы", "count": 1, "pct": 0.03}, {"key": "Орел", "count": 1, "pct": 0.03}, {"key": "window-protection", "count": 1, "pct": 0.03}, {"key": "д. Аннолово", "count": 1, "pct": 0.03}], "synonym_distribution": [{"count": 1, "entries": 7, "pct": 0.21}, {"count": 4, "entries": 423, "pct": 12.76}, {"count": 5, "entries": 143, "pct": 4.31}, {"count": 6, "entries": 2736, "pct": 82.53}, {"count": 49, "entries": 1, "pct": 0.03}, {"count": 52, "entries": 1, "pct": 0.03}, {"count": 60, "entries": 1, "pct": 0.03}, {"count": 62, "entries": 2, "pct": 0.06}, {"count": 64, "entries": 1, "pct": 0.03}], "richest_entries": [{"id": "a287da01-e373-532a-9290-fa783109326c", "key": "luxury", "category": "room_class", "syn_count": 64, "synonyms": ["люкс", "luxury", "deluxe", "делюкс", "де люкс", "de luxe", "suite", "сюит", "сьюит", "джуниор сюит"]}, {"id": "85a3a14f-828a-57f7-bcac-f093759c7b39", "key": "economy", "category": "room_class", "syn_count": 62, "synonyms": ["эконом", "бюджет", "базовый", "простой", "туристический", "туркласс", "койко-место", "койка", "спальное место", "место в номере"]}, {"id": "95e079ce-882b-581a-b052-69c48779b748", "key": "vip", "category": "room_class", "syn_count": 62, "synonyms": ["vip", "ви-ай-пи", "представительский", "президентский", "presidential", "exclusive", "эксклюзив", "элитный", "элит", "royal"]}, {"id": "e10b4059-8416-5502-b309-b0c3ea1105ee", "key": "standard", "category": "room_class", "syn_count": 60, "synonyms": ["стандарт", "standard", "классик", "classic", "нормал", "normal", "первая категория", "1 категория", "кат. 1", "i категория стандарт"]}, {"id": "b910e1a1-be76-537f-bea1-68270bdbed2b", "key": "comfort", "category": "room_class", "syn_count": 52, "synonyms": ["комфорт", "comfort", "улучшенный", "повышенной комфортности", "superior", "супериор", "суп", "плюс", "enhanced", "upgraded"]}, {"id": "1e6e098b-7023-5aa2-9a7a-b2f59d0e3155", "key": "business", "category": "room_class", "syn_count": 49, "synonyms": ["бизнес", "business", "executive", "деловой", "корпоративный", "для командировки", "офисный", "business class", "бизнес-класс", "бизнес+"]}, {"id": "000e4084-43fa-5b99-b3e1-19963660f1c7", "key": "six-full-beds", "category": "room_amenity", "syn_count": 6, "synonyms": ["шесть полных кроватей", "шестиразовое спальное место", "шесть полноценных кроватей", "шесть больших кроватей", "шесть просторных кроватей", "six-full-beds"]}, {"id": "007273ab-71c6-5c4c-8694-3c2b9d570b6a", "key": "д. Космынка", "category": "city", "syn_count": 6, "synonyms": ["деревня Космынка", "поселение Космынка", "село Космынка", "деревенька Космынка", "населенное место Космынка", "д. Космынка"]}, {"id": "007b8f88-ec49-5464-978d-c49aaf10ee97", "key": "пос. Подберезье", "category": "city", "syn_count": 6, "synonyms": ["деревня Подберезье", "село Подберезье", "поселок Березовка", "деревня Березка", "поселение Подберезы", "пос. Подберезье"]}, {"id": "007c9a83-12de-5230-8a6e-feabd20a6774", "key": "пос. Чеховский", "category": "city", "syn_count": 6, "synonyms": ["деревня Чеховская", "Чехово", "посёлок Чеховский", "Чехова деревня", "сельский населённый пункт Чеховский", "пос. Чеховский"]}], "poorest_entries": [{"id": "4298ff3f-c3a1-5a32-9107-b983732adf70", "key": "х. Лиманский", "category": "city", "syn_count": 1, "synonyms": ["х. Лиманский"]}, {"id": "85cfa67a-37ea-5360-8942-6c111225705f", "key": "пос. Запорожское", "category": "city", "syn_count": 1, "synonyms": ["пос. Запорожское"]}, {"id": "a44531e2-cde9-5038-bb8c-f23d98d2cd74", "key": "Донецк", "category": "city", "syn_count": 1, "synonyms": ["Донецк"]}, {"id": "c89987b7-ed35-501f-914a-95f0a35e485e", "key": "сoliving", "category": "hotel_amenity", "syn_count": 1, "synonyms": ["сoliving"]}, {"id": "d67a25fc-044b-5e01-9b9c-9c240c25122f", "key": "пос. Тавричанка", "category": "city", "syn_count": 1, "synonyms": ["пос. Тавричанка"]}, {"id": "ee5be63b-1039-5d5c-8b78-d6b5ef22de94", "key": "рп. Лиман", "category": "city", "syn_count": 1, "synonyms": ["рп. Лиман"]}, {"id": "f207abf7-7497-571b-b5bc-ec6bc38d1857", "key": "Усть-Донецкий район", "category": "city", "syn_count": 1, "synonyms": ["Усть-Донецкий район"]}, {"id": "00137b74-3207-5d0f-ac6b-a61a537c85ea", "key": "д. Рушиново", "category": "city", "syn_count": 4, "synonyms": ["деревня Рушиново", "село Рушиново", "поселение Рушиново", "д. Рушиново"]}, {"id": "001fc0cc-8172-51c4-ad33-761076312268", "key": "д. Медведево", "category": "city", "syn_count": 4, "synonyms": ["деревня Медведево", "село Медведево", "посёлок Медведево", "д. Медведево"]}, {"id": "00924198-51c5-5247-a5e3-e0e3c21c920d", "key": "пос. Челюскинский", "category": "city", "syn_count": 4, "synonyms": ["посёлок Челюскинский", "Челюскинский посёлок", "посёлок имени Челюскинцев", "пос. Челюскинский"]}], "vector_search": {"queries_count": 5, "aggregate_metrics": {"latency": {"avg_ms": 104.87, "min_ms": 74.56, "max_ms": 201.01, "p50_ms": 82.29, "p90_ms": 201.01}, "top1_score": {"avg": 0.8958, "min": 0.8171, "max": 0.9586, "stdev": 0.0549}, "all_scores": {"avg": 0.8398, "min": 0.7304, "max": 0.9586, "stdev": 0.0706}}, "queries": [{"query_num": 1, "query_text": "бассейн и спа", "metrics": {"embed_ms": 195.54, "search_ms": 5.47, "total_ms": 201.01, "results_returned": 5, "top1_score": 0.8709, "score_spread": 0.0258, "avg_score": 0.858}, "top_results": [{"id": "c13fceb3-47ad-5ff0-bd9d-13cbec7611d4", "score": 0.8709, "key": "heated-pool", "category": "hotel_amenity", "synonyms": ["бассейн с подогревом", "теплый бассейн", "подогретый бассейн", "водоем с обогревом", "термальный бассейн", "heated-pool"], "syn_count": 6}, {"id": "61f25875-cf25-556d-819b-64eeef145993", "score": 0.8608, "key": "spa", "category": "hotel_amenity", "synonyms": ["водолечебница", "центр релаксации", "оздоровительный комплекс", "спа-центр", "салон красоты", "spa"], "syn_count": 6}, {"id": "693b5560-626e-59a4-b5d3-2b10d938f444", "score": 0.8578, "key": "own-pool", "category": "room_amenity", "synonyms": ["собственный бассейн", "личный бассейн", "отельный бассейн", "плавательный бассейн", "бассейн гостиницы", "own-pool"], "syn_count": 6}, {"id": "fb6d5439-9032-5ded-8b89-07585fd516ee", "score": 0.8555, "key": "jacuzzi", "category": "room_amenity", "synonyms": ["джакузи", "гидромассажная ванна", "бассейн с гидромассажем", "ванна с пузырьками", "водяная баня", "jacuzzi"], "syn_count": 6}, {"id": "be4eed79-b0e6-5cfb-bc9d-d94cb881480e", "score": 0.8452, "key": "pool", "category": "hotel_amenity", "synonyms": ["бассейн отеля", "водный комплекс", "плавательный бассейн", "озеро отеля", "аквапарк", "pool"], "syn_count": 6}]}, {"query_num": 2, "query_text": "кондиционер в номере", "metrics": {"embed_ms": 82.36, "search_ms": 5.56, "total_ms": 87.92, "results_returned": 5, "top1_score": 0.9009, "score_spread": 0.1148, "avg_score": 0.8176}, "top_results": [{"id": "f0f5f4c1-edcf-5f7e-a683-669605909b86", "score": 0.9009, "key": "conditioning-in-rooms", "category": "hotel_amenity", "synonyms": ["кондиционирование в номерах", "климат-контроль в комнатах", "система кондиционирования в номерах", "охлаждение и обогрев в номерах", "вентиляция и кондиционирование в номерах", "conditioning-in-rooms"], "syn_count": 6}, {"id": "55c2a3b7-7ad4-56e2-9403-341caecda200", "score": 0.8115, "key": "iron", "category": "room_amenity", "synonyms": ["железо", "дистиллятор", "кондиционер воздуха", "мини-бар", "телевизор", "iron"], "syn_count": 6}, {"id": "d516add5-33aa-5b34-98ec-348f98bf430a", "score": 0.8015, "key": "pc", "category": "room_amenity", "synonyms": ["комфорт", "удобства", "обслуживание", "инфраструктура", "блага", "pc"], "syn_count": 6}, {"id": "a62581f9-61d7-5593-9fdf-b15daa69bce3", "score": 0.7879, "key": "scales", "category": "room_amenity", "synonyms": ["удобства", "комфорт", "обслуживание", "атмосфера", "блага", "scales"], "syn_count": 6}, {"id": "693b5560-626e-59a4-b5d3-2b10d938f444", "score": 0.7861, "key": "own-pool", "category": "room_amenity", "synonyms": ["собственный бассейн", "личный бассейн", "отельный бассейн", "плавательный бассейн", "бассейн гостиницы", "own-pool"], "syn_count": 6}]}, {"query_num": 3, "query_text": "парковка для автомобиля", "metrics": {"embed_ms": 73.47, "search_ms": 5.11, "total_ms": 78.58, "results_returned": 5, "top1_score": 0.9313, "score_spread": 0.2009, "avg_score": 0.793}, "top_results": [{"id": "9055d0ed-4d0f-59fb-b4a6-74a7f6a0a6bb", "score": 0.9313, "key": "parking", "category": "hotel_amenity", "synonyms": ["автостоянка", "парковка", "стоянка автомобилей", "место для парковки", "автомобильная парковка", "parking"], "syn_count": 6}, {"id": "1e079df2-0f04-560b-acc1-b512ea18dfd5", "score": 0.8173, "key": "garage", "category": "hotel_amenity", "synonyms": ["автостоянка", "машинноеотделение", "автомобильныйподвал", "парковкадляавтомобилей", "гаражнатерриторииотеля", "garage"], "syn_count": 6}, {"id": "90a67f56-9394-5c74-bd66-bdd0369f2cc7", "score": 0.7541, "key": "Узловая", "category": "city", "synonyms": ["перекрёсток", "пересечение дорог", "транспортный узел", "Узловая"], "syn_count": 4}, {"id": "96b9134e-16a9-5be2-aaf5-ca27cfee7229", "score": 0.7318, "key": "race-track-view", "category": "room_amenity", "synonyms": ["вид на трассу", "панорамный вид на гонку", "обзор трассы", "вид на автодром", "близость к трассе", "race-track-view"], "syn_count": 6}, {"id": "4e149a18-ae35-5905-8a97-69769d3743f7", "score": 0.7304, "key": "camping", "category": "accommodation", "synonyms": ["туристическая база", "кемпинг", "палаточный городок", "лагерь под открытым небом", "стоянка для автофургонов", "camping"], "syn_count": 6}]}, {"query_num": 4, "query_text": "Москва", "metrics": {"embed_ms": 76.98, "search_ms": 5.31, "total_ms": 82.29, "results_returned": 5, "top1_score": 0.8171, "score_spread": 0.0369, "avg_score": 0.7891}, "top_results": [{"id": "70d0ecb9-35ce-5810-9083-5df459afebfd", "score": 0.8171, "key": "Москва", "category": "city", "synonyms": ["столица России", "белокаменная", "Мск", "нерезиновая", "большая деревня", "Москва"], "syn_count": 6}, {"id": "bf81a700-47ea-523e-aabc-eac210b0e902", "score": 0.783, "key": "Ржев", "category": "city", "synonyms": ["город воинской славы", "место сражений", "исторический центр", "окраина Москвы", "находится в Тверской области", "Ржев"], "syn_count": 6}, {"id": "d247b032-caa5-54d3-9b45-087534200d4d", "score": 0.7829, "key": "Астрахань", "category": "city", "synonyms": ["город на Волге", "порт на Волге", "южная столица России", "Астрахань"], "syn_count": 4}, {"id": "f2edc501-329e-5b27-ab69-9a85a4ebc722", "score": 0.7827, "key": "Долгопрудный", "category": "city", "synonyms": ["город-спутник Москвы", "посёлок на берегу", "промышленный пригород", "набережная столица", "северо-запад Подмосковья", "Долгопрудный"], "syn_count": 6}, {"id": "879a017a-7c21-5e10-afba-58921986b68b", "score": 0.7801, "key": "Химки", "category": "city", "synonyms": ["город наукограда", "муниципальный округ Москвы", "административный район Подмосковья", "жилой массив столицы", "близость мегаполиса", "Химки"], "syn_count": 6}]}, {"query_num": 5, "query_text": "курортный город у моря", "metrics": {"embed_ms": 69.67, "search_ms": 4.89, "total_ms": 74.56, "results_returned": 5, "top1_score": 0.9586, "score_spread": 0.0433, "avg_score": 0.9411}, "top_results": [{"id": "68f5b378-fdd8-5e60-8d1d-95039bcf148b", "score": 0.9586, "key": "Геленджик", "category": "city", "synonyms": ["курортный город", "город у моря", "поселок-курорт", "берег черноморского побережья", "Черноморский курорт", "Геленджик"], "syn_count": 6}, {"id": "e34071b6-0069-5c01-bc86-ac9edca99413", "score": 0.9497, "key": "Анапа", "category": "city", "synonyms": ["курортный город", "южное побережье", "город солнца", "место отдыха", "природная жемчужина", "Анапа"], "syn_count": 6}, {"id": "fe78e854-8ea8-56a1-8016-60fa7fed87ad", "score": 0.9417, "key": "Пицунда", "category": "city", "synonyms": ["курортный городок", "побережье Черного моря", "туристическое место", "южное побережье", "поселок городского типа", "Пицунда"], "syn_count": 6}, {"id": "fd1cfbbc-8638-56c2-b883-6ae3bc8df8c3", "score": 0.9404, "key": "Приморск", "category": "city", "synonyms": ["город-курорт", "портовый город", "курортный городок", "морской курорт", "пригородный поселок", "Приморск"], "syn_count": 6}, {"id": "5f479ae6-ec2b-5a57-a648-3a4bb60ea8ad", "score": 0.9153, "key": "пос. Морское", "category": "city", "synonyms": ["посёлок морской", "курортный посёлок", "посёлок у моря", "морской городок", "причерноморский посёлок", "пос. Морское"], "syn_count": 6}]}]}};
+const META    = R.metadata;
+const CS      = R.category_stats;
+const FILL    = R.fill_summary;
+const VS      = R.vector_search;
+const SYNDIST = R.synonym_distribution;
+const RICHEST = R.richest_entries;
+const POOREST = R.poorest_entries;
+
+const ALL_CATS = R.all_categories || [];
+
+// Динамическая палитра — строится из реальных категорий данных
+var _PALETTE = [
+  {bg:'#e8f7ec', color:'#21A038', border:'#21A038'},
+  {bg:'#fff8ec', color:'#b87a00', border:'#f5a623'},
+  {bg:'#eff6ff', color:'#0077cc', border:'#0077cc'},
+  {bg:'#f5f3ff', color:'#7c3aed', border:'#7c3aed'},
+  {bg:'#fff1f2', color:'#be123c', border:'#be123c'},
+  {bg:'#f0fdf4', color:'#166534', border:'#166534'},
+  {bg:'#fefce8', color:'#854d0e', border:'#854d0e'},
+  {bg:'#f0f9ff', color:'#0369a1', border:'#0369a1'},
+];
+var _NULL_PAL = {bg:'#f3f4f6', color:'#6b7280', border:'#9ca3af'};
+// Фиксированные цвета для известных категорий
+// Порядковый индекс для known-категорий строится динамически из ALL_CATS
+var _KNOWN_IDX = {};
+ALL_CATS.forEach(function(cat, i){ _KNOWN_IDX[cat] = i; });
+
+var CAT_PAL = {};
+ALL_CATS.forEach(function(cat, i) {
+  var idx = (_KNOWN_IDX[cat] !== undefined) ? _KNOWN_IDX[cat] : (i % _PALETTE.length);
+  CAT_PAL[cat] = _PALETTE[idx];
+});
+
+function catStyle(cat) { return CAT_PAL[cat] || _NULL_PAL; }
+
+function fmtN(n)  { return (n||0).toLocaleString('ru'); }
+function fmtP(n)  { return (n||0).toFixed(2)+'%'; }
+function fmtMs(n) { return n!=null ? n+'ms' : '—'; }
+function scCls(s) { return s>=0.88?'sc-hi':s>=0.80?'sc-md':'sc-lo'; }
+
+function bar(label, w, extra, color) {
+  color = color||'#21A038';
+  var pw = Math.min(w||0, 100);
+  return '<div class="br">'
+    +'<div class="br-l" title="'+label+'">'+label+'</div>'
+    +'<div class="br-t"><div class="br-f" style="width:'+pw+'%;background:'+color+'"></div></div>'
+    +'<div class="br-v">'+(extra!=null?extra:pw.toFixed(1)+'%')+'</div>'
+    +'</div>';
+}
+
+function catBadge(cat) {
+  var cc = catStyle(cat);
+  return '<span class="bdg" style="background:'+cc.bg+';color:'+cc.color+'">'+(cat||'—')+'</span>';
+}
+
+function synTagsHtml(syns, max) {
+  max = max||8;
+  if(!syns||!syns.length) return '<span style="color:var(--lt);font-size:11px">нет синонимов</span>';
+  var shown = syns.slice(0, max);
+  var html = shown.map(function(s){ return '<span class="syn-tag">'+s+'</span>'; }).join('');
+  if(syns.length > max) html += '<span class="sq-more">+ещё '+(syns.length-max)+'</span>';
+  return html;
+}
+
+function entryCard(e, borderColor) {
+  var cc = catStyle(e.category);
+  var border = borderColor||cc.border||'#c8e6cf';
+  return '<div class="entry" style="border-left-color:'+border+'">'
+    +'<div class="entry-key">'+e.key+'</div>'
+    +'<span class="entry-cat" style="background:'+cc.bg+';color:'+cc.color+'">'+(e.category||'—')+'</span>'
+    +' <span style="font-size:12px;color:var(--mu)">'+e.syn_count+' синонимов</span>'
+    +'<div class="entry-syns">'+synTagsHtml(e.synonyms, 10)+'</div>'
+    +'<div class="entry-id">id: '+e.id+'</div>'
+    +'</div>';
+}
+
+// ── 1. KPI — динамически по реальным категориям ────────
+document.getElementById('kpi-total').textContent = fmtN(META.total_points);
+// Заполняем KPI-счётчики категорий динамически
+(function(){
+  var kpiIds = ['kpi-c0','kpi-c1','kpi-c2','kpi-c3'];
+  ALL_CATS.slice(0,4).forEach(function(cat, i){
+    var el = document.getElementById(kpiIds[i]);
+    if(el) el.textContent = fmtN((CS[cat]||{}).count||0);
+    var lbl = document.getElementById(kpiIds[i]+'-lbl');
+    if(lbl) lbl.textContent = cat;
+  });
+})();
+
+// ── 2. Заполненность ────────────────────────────────────
+(function(){
+  var fs = FILL;
+  var rows = [
+    {f:'key',      label:'key',      filled:fs.key.filled,      total:META.total_points, note: fs.key.filled_pct.toFixed(1)+'%'},
+    {f:'category', label:'category', filled:fs.category.filled,  total:META.total_points, note: fs.category.filled_pct.toFixed(1)+'%'},
+    {f:'synonyms', label:'synonyms (≥1)', filled:(META.total_points - fs.synonyms.missing - fs.synonyms.empty_list), total:META.total_points,
+     note: (META.total_points - fs.synonyms.missing - fs.synonyms.empty_list)/META.total_points*100 < 0 ? '0%' :
+           ((META.total_points - fs.synonyms.missing - fs.synonyms.empty_list)/META.total_points*100).toFixed(1)+'%'},
+  ];
+  var html = '<div class="fg">';
+  rows.forEach(function(row){
+    var p = row.total ? row.filled/row.total*100 : 0;
+    var c = p===100?'#21A038':p>80?'#1a7d2c':p>40?'#f5a623':p>0?'#d0021b':'#9ca3af';
+    html += '<div class="fg-row">'
+      +'<div class="fg-field">'+row.label+'</div>'
+      +'<div class="fg-mini"><div class="fg-bar" style="width:'+p.toFixed(1)+'%;background:'+c+'"></div></div>'
+      +'<div class="fg-pct" style="color:'+c+'">'+row.note+'</div>'
+      +'<div class="fg-dot" style="background:'+c+'"></div>'
+      +'</div>';
+  });
+  html += '</div>';
+
+  // детали
+  html += '<div class="g3" style="margin-top:16px">';
+
+  // key
+  html += '<div class="card"><div class="card-h">Поле key</div><div class="card-b">'
+    +row('Заполнено', fmtN(fs.key.filled)+' ('+fs.key.filled_pct.toFixed(1)+'%)', 'var(--g)')
+    +row('Пустая строка', fmtN(fs.key.empty), 'var(--y)')
+    +row('null', fmtN(fs.key.null), 'var(--lt)')
+    +'</div></div>';
+
+  // category
+  var cats_html = ALL_CATS.map(function(cat){
+    var cnt = (CS[cat]||{}).count||0;
+    var cc = catStyle(cat);
+    return row(cat, fmtN(cnt)+' ('+fmtP(cnt/META.total_points*100)+')', cc.color);
+  }).join('');
+  html += '<div class="card"><div class="card-h">Поле category</div><div class="card-b">'
+    +cats_html
+    +row('Пустая / null', fmtN((fs.category.empty||0)+(fs.category.null||0)), 'var(--lt)')
+    +'</div></div>';
+
+  // synonyms
+  var syn = fs.synonyms;
+  html += '<div class="card"><div class="card-h">Поле synonyms</div><div class="card-b">'
+    +row('Много синонимов (≥2)', fmtN(syn.many_synonyms)+' ('+syn.many_pct.toFixed(1)+'%)', 'var(--g)')
+    +row('Один синоним', fmtN(syn.one_synonym)+' ('+syn.one_pct.toFixed(1)+'%)', 'var(--b)')
+    +row('Пустой список', fmtN(syn.empty_list)+' ('+syn.empty_list_pct.toFixed(1)+'%)', 'var(--y)')
+    +row('Поле отсутствует', fmtN(syn.missing)+' ('+syn.missing_pct.toFixed(1)+'%)', 'var(--r)')
+    +(syn.length_stats.avg!=null?row('Среднее синонимов', syn.length_stats.avg.toFixed(1), 'var(--mu)'):'')
+    +(syn.length_stats.max!=null?row('Максимум', fmtN(syn.length_stats.max), 'var(--mu)'):'')
+    +'</div></div>';
+
+  html += '</div>';
+  document.getElementById('fill-section').innerHTML = html;
+
+  function row(label, val, color) {
+    return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--br);font-size:12px">'
+      +'<span>'+label+'</span><span style="font-weight:600;color:'+color+'">'+val+'</span></div>';
+  }
+})();
+
+// ── 3. Статистика по категориям ────────────────────────
+(function(){
+  var html = '';
+  ALL_CATS.forEach(function(cat){
+    var cs = CS[cat]||{};
+    var cc = catStyle(cat);
+    var sl = cs.syn_length_stats||{};
+    var total_c = cs.count||1;
+
+    // Заголовок карточки — используем имя категории напрямую
+    html += '<div class="card" style="margin-bottom:18px">'
+      +'<div class="card-h" style="color:'+cc.color+';background:'+cc.bg+';font-size:13px;font-weight:700">'
+      +cat+' — '+fmtN(cs.count)+' записей · '+fmtN(cs.unique_keys)+' уникальных ключей'
+      +'</div>'
+      +'<div class="card-b">';
+
+    // Строки-метрики
+    function row(label, val, color) {
+      return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--br);font-size:12px">'
+        +'<span>'+label+'</span><span style="font-weight:600;color:'+(color||'var(--tx)')+'">'+val+'</span></div>';
+    }
+    html += row('Всего записей',         fmtN(cs.count),                                    cc.color);
+    html += row('Уникальных ключей',     fmtN(cs.unique_keys),                              cc.color);
+    html += row('Ср. синонимов на запись', sl.avg!=null?sl.avg.toFixed(1):'—',              'var(--mu)');
+    html += row('Максимум синонимов',    sl.max!=null?fmtN(sl.max):'—',                     'var(--mu)');
+    html += row('Много синонимов (≥2)',  fmtN(cs.many_synonyms)+' ('+fmtP(cs.many_synonyms/total_c*100)+')', '#21A038');
+    html += row('Один синоним',          fmtN(cs.one_synonym)  +' ('+fmtP(cs.one_synonym/total_c*100)+')',   '#0077cc');
+    html += row('Нет синонимов',         fmtN(cs.no_synonyms)  +' ('+fmtP(cs.no_synonyms/total_c*100)+')',  '#d0021b');
+
+    // Примеры записей
+    if(cs.entries&&cs.entries.length) {
+      html += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);margin:14px 0 8px">Примеры записей</div>';
+      html += cs.entries.map(function(e){ return entryCard(e); }).join('');
+    }
+
+    html += '</div></div>';
+  });
+
+  document.getElementById('cat-section').innerHTML = html;
+})();
+
+// ── 4. Распределение синонимов ───────────────────────────
+(function(){
+  var dist = SYNDIST||[];
+  var maxV = dist.length ? Math.max.apply(null, dist.map(function(d){return d.entries;})) : 1;
+  var html = dist.map(function(d){
+    var label = d.count === 0 ? '0 синонимов' : d.count === 1 ? '1 синоним' : d.count+' синонимов';
+    var color = d.count===0?'#d0021b':d.count===1?'#f5a623':'#21A038';
+    return bar(label, d.entries/maxV*100, fmtN(d.entries)+' ('+fmtP(d.pct)+')', color);
+  }).join('');
+  document.getElementById('syndist-section').innerHTML = html||'<div style="color:var(--mu)">Нет данных</div>';
+})();
+
+// ── 5. Богатые и бедные записи ──────────────────────────
+(function(){
+  var rHtml = (RICHEST||[]).map(function(e){ return entryCard(e, '#21A038'); }).join('');
+  var pHtml = (POOREST||[]).map(function(e){ return entryCard(e, '#d0021b'); }).join('');
+  document.getElementById('richest-section').innerHTML = rHtml||'—';
+  document.getElementById('poorest-section').innerHTML = pHtml||'—';
+})();
+
+
+
+// ── 7. Векторный поиск ──────────────────────────────────
+(function(){
+  var agg = (VS.aggregate_metrics)||{};
+  var lat = agg.latency||{};
+  var sc  = agg.top1_score||{};
+
+  function row(l,v){ return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--br);font-size:12px"><span>'+l+'</span><span style="font-weight:600">'+v+'</span></div>'; }
+
+  var sumHtml = '<div class="card" style="margin-bottom:16px"><div class="card-h">Агрегированные метрики</div><div class="card-b">'
+    +row('Avg latency', fmtMs(lat.avg_ms))
+    +row('P50', fmtMs(lat.p50_ms))
+    +row('P90', fmtMs(lat.p90_ms))
+    +row('Min / Max', fmtMs(lat.min_ms)+' / '+fmtMs(lat.max_ms))
+    +(sc.avg!=null?row('Avg top1 score', sc.avg.toFixed(4)):'')
+    +(sc.min!=null?row('Min / Max score', sc.min.toFixed(4)+' / '+sc.max.toFixed(4)):'')
+    +'</div></div>';
+
+  var cardsHtml = (VS.queries||[]).map(function(q){
+    var ms = q.metrics||{};
+    var resHtml = (q.top_results||[]).map(function(r, j){
+      var cc = catStyle(r.category);
+      return '<div class="sq-r">'
+        +'<div class="sq-r-top">'
+        +'<div class="sq-rk">'+(j+1)+'.</div>'
+        +'<div class="sq-nm">'+r.key+'</div>'
+        +'<span class="bdg" style="background:'+cc.bg+';color:'+cc.color+'">'+r.category+'</span>'
+        +(r.score!=null?'<div class="sq-sc '+scCls(r.score)+'">'+r.score.toFixed(4)+'</div>':'')
+        +'</div>'
+        +'<div class="sq-syns">'+synTagsHtml(r.synonyms, 8)
+        +(r.syn_count>8?'<span class="sq-more">+ещё '+(r.syn_count-8)+'</span>':'')
+        +'</div>'
+        +'<div style="font-family:monospace;font-size:10px;color:var(--lt);margin-top:3px">'+r.id+'</div>'
+        +'</div>';
+    }).join('');
+
+    return '<div class="sq"><div class="sq-h">'
+      +'<div class="sq-n">'+q.query_num+'</div>'
+      +'<div class="sq-t">'+q.query_text+'</div>'
+      +'<div class="sq-ms">'
+      +'<div class="sq-m">embed <strong>'+fmtMs(ms.embed_ms)+'</strong></div>'
+      +'<div class="sq-m">search <strong>'+fmtMs(ms.search_ms)+'</strong></div>'
+      +(ms.top1_score!=null?'<div class="sq-m">top1 <strong style="color:var(--g)">'+ms.top1_score.toFixed(4)+'</strong></div>':'')
+      +'</div></div>'
+      +'<div class="sq-body">'+resHtml+'</div></div>';
+  }).join('');
+
+  document.getElementById('search-section').innerHTML = sumHtml + cardsHtml;
+})();
+
+// ── Nav ─────────────────────────────────────────────────
+document.querySelectorAll('.nav-a').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var el = document.getElementById(a.dataset.sec);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+    document.querySelectorAll('.nav-a').forEach(function(x){x.classList.remove('on');});
+    a.classList.add('on');
+  });
+});
+
+// ── Animate bars ────────────────────────────────────────
+setTimeout(function(){
+  document.querySelectorAll('.br-f,.fg-bar').forEach(function(el){
+    var w=el.style.width; el.style.width='0';
+    requestAnimationFrame(function(){el.style.transition='width .7s cubic-bezier(.4,0,.2,1)';el.style.width=w;});
+  });
+}, 100);
+
+</script>
+</body>
+</html>

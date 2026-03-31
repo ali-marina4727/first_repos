@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Автоотчёт по ресторанам</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #f4f6f3;
+      --surface: #ffffff;
+      --surface-soft: #f2f8f1;
+      --line: #dfe7dd;
+      --line-soft: #edf2eb;
+      --text: #1e2b1f;
+      --muted: #6e786d;
+
+      --sber-green: #21a038;
+      --sber-green-dark: #128c2a;
+      --sber-green-deep: #0b6b1f;
+      --sber-lime: #9ad400;
+      --sber-blue: #0a84d6;
+      --sber-orange: #f5a623;
+      --sber-red: #d0021b;
+
+      --shadow: 0 8px 24px rgba(35, 61, 31, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 0 0 32px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 140px, transparent 141px),
+        radial-gradient(circle at 42% 44%, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 180px, transparent 181px),
+        radial-gradient(circle at 78% 30%, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 120px, transparent 121px),
+        linear-gradient(135deg, var(--sber-green-deep) 0%, var(--sber-green) 58%, #2ab34b 100%);
+      color: white;
+      padding: 36px 56px 70px;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--sber-lime), var(--sber-green), var(--sber-blue), var(--sber-lime));
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      background: #0f8f2a;
+      border-radius: 50%;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 18px;
+      height: 10px;
+      border-left: 5px solid #9fe870;
+      border-bottom: 5px solid #9fe870;
+      transform: rotate(-45deg);
+      z-index: 1;
+    }
+
+    .hero-title {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.15;
+      font-weight: 800;
+    }
+
+    .hero-subtitle {
+      margin: 0;
+      opacity: 0.92;
+      font-size: 15px;
+    }
+
+    .hero-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(110px, 1fr));
+      gap: 10px;
+      min-width: 460px;
+    }
+
+    .hero-kpi {
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(4px);
+      border-radius: 12px;
+      padding: 16px 14px;
+      text-align: center;
+    }
+
+    .hero-kpi-value {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .hero-kpi-label {
+      font-size: 12px;
+      opacity: 0.92;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .tabs-bar {
+      background: linear-gradient(180deg, #0f6f22 0%, #0b5e1d 100%);
+      padding: 14px 56px;
+      color: rgba(255,255,255,0.92);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .mode-label {
+      opacity: 0.8;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-right: 4px;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .menu-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      padding: 0 56px;
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+    }
+
+    .menu-item {
+      padding: 16px 8px 14px;
+      font-size: 14px;
+      color: var(--muted);
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      transition: color .18s ease, border-color .18s ease;
+    }
+
+    .menu-item.active {
+      color: var(--sber-green);
+      border-bottom-color: #8dd57a;
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 28px 56px 0;
+    }
+
+    .scroll-section {
+      scroll-margin-top: 84px;
+      margin-bottom: 34px;
+    }
+
+    .section-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--sber-green);
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      margin-right: 10px;
+    }
+
+    .headline {
+      display: flex;
+      align-items: center;
+      font-size: 17px;
+      font-weight: 800;
+      margin: 0 0 20px;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: var(--sber-green);
+    }
+
+    .kpi.orange::after { background: var(--sber-orange); }
+    .kpi.blue::after { background: var(--sber-blue); }
+    .kpi.red::after { background: var(--sber-red); }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+
+    .kpi-value {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: var(--sber-green);
+    }
+
+    .kpi.orange .kpi-value { color: var(--sber-orange); }
+    .kpi.blue .kpi-value { color: var(--sber-blue); }
+    .kpi.red .kpi-value { color: var(--sber-red); }
+
+    .kpi-meta {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      padding: 16px 22px;
+      background: #edf7eb;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-body {
+      padding: 20px 22px 22px;
+    }
+
+    .chart-wrap {
+      position: relative;
+      min-height: 340px;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 340px !important;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    thead th {
+      text-align: left;
+      background: #f3f8f1;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 800;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line-soft);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody td:last-child,
+    thead th:last-child {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .fill-table thead th:nth-child(2),
+    .fill-table tbody td:nth-child(2),
+    .fill-table thead th:nth-child(3),
+    .fill-table tbody td:nth-child(3) {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .examples-col-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .examples-col-title.positive { color: var(--sber-green); }
+    .examples-col-title.negative { color: #b3001b; }
+
+    .example-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .example-card {
+      background: linear-gradient(180deg, #f1fbef 0%, #edf7eb 100%);
+      border: 1px solid #d8e6d3;
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: inset 4px 0 0 0 var(--sber-green);
+    }
+
+    .example-card.negative {
+      box-shadow: inset 4px 0 0 0 #d91c2f;
+    }
+
+    .example-card.muted {
+      background: #fafcf9;
+      color: var(--muted);
+      box-shadow: none;
+      border: 1px dashed var(--line);
+    }
+
+    .example-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #1f2a1f;
+    }
+
+    .example-meta {
+      font-size: 14px;
+      color: #556154;
+      margin-bottom: 8px;
+    }
+
+    .example-id {
+      font-size: 12px;
+      color: #7b857a;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      word-break: break-all;
+    }
+
+    .answer-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .answer-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .answer-query-label,
+    .answer-filter-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      background: #edf7eb;
+      padding: 14px 18px 10px;
+      font-weight: 800;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .answer-query-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 14px 18px 18px;
+      background: #f8fcf7;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .answer-query {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .query-type-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .query-type-badge.description {
+      background: #edf7eb;
+      color: var(--sber-green-dark);
+      border: 1px solid #d6e8d1;
+    }
+
+    .query-type-badge.name {
+      background: #eef5fb;
+      color: var(--sber-blue);
+      border: 1px solid #d7e8f7;
+    }
+
+    .answer-filter {
+      padding: 14px 18px 18px;
+      background: #fcfefb;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .answer-filter-box {
+      display: grid;
+      gap: 10px;
+    }
+
+    .filter-group-collapse {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .filter-group-collapse:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-group-collapse.level-1 {
+      margin-left: 4px;
+    }
+
+    .filter-group-collapse.level-2 {
+      margin-left: 10px;
+    }
+
+    .filter-group-summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 800;
+      user-select: none;
+    }
+
+    .filter-group-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .filter-group-summary.must {
+      background: linear-gradient(180deg, #f3fbf1 0%, #edf8ea 100%);
+      color: var(--sber-green-dark);
+    }
+
+    .filter-group-summary.should {
+      background: linear-gradient(180deg, #fff9ef 0%, #fff5e7 100%);
+      color: #9a6a00;
+    }
+
+    .filter-group-summary.must_not {
+      background: linear-gradient(180deg, #fff3f4 0%, #ffebee 100%);
+      color: #b3001b;
+    }
+
+    .filter-group-title {
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .filter-group-count {
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    .filter-group-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid var(--line-soft);
+      background: #fcfdfb;
+    }
+
+    .filter-condition-card {
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 12px 14px;
+      display: grid;
+      gap: 6px;
+      box-shadow: 0 2px 10px rgba(35, 61, 31, 0.03);
+    }
+
+    .filter-condition-card.level-2 {
+      margin-left: 4px;
+    }
+
+    .filter-condition-field {
+      font-size: 13px;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    .filter-condition-op {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .filter-condition-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .answer-filter-empty {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .answer-filter-raw {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+
+    .answer-filter-raw summary {
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .answer-filter-raw pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      background: #f6f8f5;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: auto;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #314030;
+    }
+
+    .answer-results {
+      padding: 16px 18px 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .answer-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 14px 16px;
+    }
+
+    .answer-item-top {
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .answer-rank {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #edf7eb;
+      color: var(--sber-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .answer-title {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .answer-sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .answer-score {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--sber-green);
+      white-space: nowrap;
+    }
+
+    .answer-metrics {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      padding-left: 58px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .answer-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eef5fb;
+      color: var(--sber-blue);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .answer-badge.premium {
+      background: #fff5e8;
+      color: #b16b00;
+    }
+
+    .empty {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fafcf9;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1200px) {
+      .hero-top {
+        flex-direction: column;
+      }
+      .hero-kpis {
+        min-width: 0;
+        width: 100%;
+      }
+      .kpis {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .grid, .examples-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero, .tabs-bar, .menu-bar, .content {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .hero {
+        padding-top: 24px;
+        padding-bottom: 32px;
+      }
+      .hero-title {
+        font-size: 24px;
+      }
+      .hero-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .kpis {
+        grid-template-columns: 1fr;
+      }
+      .answer-item-top {
+        grid-template-columns: 1fr;
+      }
+      .answer-metrics {
+        padding-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div>
+            <h1 class="hero-title">Аналитический отчёт по коллекции restaurants</h1>
+            <p class="hero-subtitle">Автоотчёт по ресторанам, premium-признакам, тегам, фото, заполненности и примерам выдачи</p>
+          </div>
+        </div>
+
+        <div class="hero-kpis">
+          <div class="hero-kpi">
+            <div class="hero-kpi-value">31 057</div>
+            <div class="hero-kpi-label">Всего</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="hero-kpi-value">10 099</div>
+            <div class="hero-kpi-label">Афиша</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="hero-kpi-value">2 155</div>
+            <div class="hero-kpi-label">Premium</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="hero-kpi-value">4 584</div>
+            <div class="hero-kpi-label">Кофейни</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="tabs-bar">
+      <div class="mode-label">Режим:</div>
+      <div class="pill">Вся коллекция</div>
+      <div class="pill">Афиша</div>
+      <div class="pill">Premium</div>
+      <div class="pill">Фото</div>
+      <div class="pill">Ответы</div>
+    </div>
+
+    <div class="menu-bar" id="menuBar">
+      <div class="menu-item active" data-target="overview">Обзор</div>
+      <div class="menu-item" data-target="cities">Города</div>
+      <div class="menu-item" data-target="tags">Теги</div>
+      <div class="menu-item" data-target="photos">Фото</div>
+      <div class="menu-item" data-target="fill">Заполненность</div>
+      <div class="menu-item" data-target="answers">Ответы</div>
+    </div>
+
+    <main class="content">
+      <section class="scroll-section" id="overview" data-section="overview">
+        <h2 class="headline"><span class="section-index">1</span>Обзор</h2>
+
+        <section class="kpis">
+          <div class="kpi">
+            <div class="kpi-label">Объектов</div>
+            <div class="kpi-value">31 057</div>
+            <div class="kpi-meta">Вся коллекция</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Заведения из Афиши</div>
+            <div class="kpi-value">10 099</div>
+            <div class="kpi-meta">32.52%</div>
+          </div>
+          <div class="kpi orange">
+            <div class="kpi-label">Premium</div>
+            <div class="kpi-value">2 155</div>
+            <div class="kpi-meta">6.94%</div>
+          </div>
+          <div class="kpi orange">
+            <div class="kpi-label">Кофейни</div>
+            <div class="kpi-value">4 584</div>
+            <div class="kpi-meta">14.76%</div>
+          </div>
+          <div class="kpi blue">
+            <div class="kpi-label">Сетевые</div>
+            <div class="kpi-value">16 513</div>
+            <div class="kpi-meta">53.17%</div>
+          </div>
+          <div class="kpi red">
+            <div class="kpi-label">Бары, пабы</div>
+            <div class="kpi-value">3 640</div>
+            <div class="kpi-meta">11.72%</div>
+          </div>
+        </section>
+
+        <section class="section full" style="margin-bottom:24px;">
+          <div class="section-head">Правило premium</div>
+          <div class="section-body">
+            <div class="empty">
+              Заведение считается premium, если выполнено хотя бы одно условие:
+              is_premium = True или одновременно выполняются twogis_reviews_count ≥ 50, twogis_rating ≥ 4.9 и средний чек ≥ 3000 ₽.
+            </div>
+          </div>
+        </section>
+
+        <section class="grid">
+          <section class="section">
+            <div class="section-head">Распределение количества блюд</div>
+            <div class="section-body">
+              <div class="chart-wrap"><canvas id="dishesChart"></canvas></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">Распределение количества напитков</div>
+            <div class="section-body">
+              <div class="chart-wrap"><canvas id="drinksChart"></canvas></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">Распределение по среднему чеку</div>
+            <div class="section-body">
+              <div class="chart-wrap"><canvas id="avgBillChart"></canvas></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">Топ-20 twogis_extention</div>
+            <div class="section-body">
+              <table><thead><tr><th>Значение</th><th>Количество</th></tr></thead><tbody><tr><td>кофейня</td><td>3 169</td></tr><tr><td>кафе</td><td>2 647</td></tr><tr><td>ресторан</td><td>2 321</td></tr><tr><td>пекарня</td><td>1 189</td></tr><tr><td>бар</td><td>868</td></tr><tr><td>кафе быстрого питания</td><td>701</td></tr><tr><td>столовая</td><td>548</td></tr><tr><td>пиццерия</td><td>478</td></tr><tr><td>лаундж-бар</td><td>384</td></tr><tr><td>экспресс-кофейня</td><td>358</td></tr><tr><td>супермаркет</td><td>337</td></tr><tr><td>кондитерская</td><td>321</td></tr><tr><td>сеть пиццерий</td><td>264</td></tr><tr><td>кафе-бар</td><td>220</td></tr><tr><td>бистро</td><td>212</td></tr><tr><td>суши-бар</td><td>193</td></tr><tr><td>ресторан быстрого питания</td><td>182</td></tr><tr><td>кафе-пекарня</td><td>175</td></tr><tr><td>ресторан грузинской кухни</td><td>174</td></tr><tr><td>кафе-кондитерская</td><td>173</td></tr></tbody></table>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <section class="scroll-section" id="cities" data-section="cities">
+        <h2 class="headline"><span class="section-index">2</span>Города</h2>
+        <section class="section full">
+          <div class="section-head">Топ-10 городов по количеству заведений</div>
+          <div class="section-body">
+            <div class="chart-wrap"><canvas id="citiesChart"></canvas></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="scroll-section" id="tags" data-section="tags">
+        <h2 class="headline"><span class="section-index">3</span>Теги</h2>
+        <section class="grid">
+          <section class="section">
+            <div class="section-head">Самые популярные twogis_tags</div>
+            <div class="section-body">
+              <table><thead><tr><th>Значение</th><th>Количество</th></tr></thead><tbody><tr><td>Доставка еды</td><td>11 477</td></tr><tr><td>Быстрое питание</td><td>7 173</td></tr><tr><td>Кафе</td><td>6 815</td></tr><tr><td>Рестораны</td><td>5 503</td></tr><tr><td>Кофейни</td><td>4 080</td></tr><tr><td>Бары</td><td>4 080</td></tr><tr><td>Кондитерские изделия</td><td>3 517</td></tr><tr><td>Пекарни</td><td>2 121</td></tr><tr><td>Точки кофе</td><td>1 927</td></tr><tr><td>Банкетные залы</td><td>1 590</td></tr><tr><td>Столовые</td><td>1 343</td></tr><tr><td>Пиццерии</td><td>1 337</td></tr><tr><td>Суши-бары</td><td>1 173</td></tr><tr><td>Продажа кофе</td><td>1 147</td></tr><tr><td>Кулинарии</td><td>1 085</td></tr><tr><td>Кафе-кондитерские</td><td>729</td></tr><tr><td>Центры паровых коктейлей</td><td>580</td></tr><tr><td>Караоке-залы</td><td>421</td></tr><tr><td>Доставка продуктов</td><td>357</td></tr><tr><td>Супермаркеты</td><td>342</td></tr></tbody></table>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">Самые популярные tags</div>
+            <div class="section-body">
+              <table><thead><tr><th>Значение</th><th>Количество</th></tr></thead><tbody><tr><td>Европейская кухня</td><td>10 314</td></tr><tr><td>1000–3000 рублей</td><td>5 171</td></tr><tr><td>Паста</td><td>4 612</td></tr><tr><td>Пицца</td><td>4 352</td></tr><tr><td>Кафе</td><td>3 783</td></tr><tr><td>Русская кухня</td><td>3 636</td></tr><tr><td>Постное меню</td><td>2 788</td></tr><tr><td>Итальянская кухня</td><td>2 668</td></tr><tr><td>Бургеры</td><td>2 582</td></tr><tr><td>Коктейльная карта</td><td>2 568</td></tr><tr><td>Шашлыки</td><td>2 410</td></tr><tr><td>Суши</td><td>2 298</td></tr><tr><td>До 1000 рублей</td><td>2 044</td></tr><tr><td>Японская кухня</td><td>2 030</td></tr><tr><td>Стейки</td><td>1 972</td></tr><tr><td>Бары</td><td>1 951</td></tr><tr><td>Raw-меню</td><td>1 694</td></tr><tr><td>Вок</td><td>1 564</td></tr><tr><td>Сэндвичи</td><td>1 524</td></tr><tr><td>Торты на заказ</td><td>1 490</td></tr></tbody></table>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <section class="scroll-section" id="photos" data-section="photos">
+        <h2 class="headline"><span class="section-index">4</span>Фото</h2>
+
+        <section class="kpis">
+          <div class="kpi">
+            <div class="kpi-label">3+ фото</div>
+            <div class="kpi-value">21 066</div>
+            <div class="kpi-meta">67.83%</div>
+          </div>
+          <div class="kpi orange">
+            <div class="kpi-label">1–2 фото</div>
+            <div class="kpi-value">9 991</div>
+            <div class="kpi-meta">32.17%</div>
+          </div>
+          <div class="kpi red">
+            <div class="kpi-label">Пустой список</div>
+            <div class="kpi-value">0</div>
+            <div class="kpi-meta">0.00%</div>
+          </div>
+          <div class="kpi red">
+            <div class="kpi-label">Поле отсутствует</div>
+            <div class="kpi-value">0</div>
+            <div class="kpi-meta">0.00%</div>
+          </div>
+        </section>
+
+        <section class="section full">
+          <div class="section-head">Примеры</div>
+          <div class="section-body">
+            <div class="examples-grid">
+              <div>
+                <div class="examples-col-title positive">☑ 3+ фотографий</div>
+                <div class="example-stack">
+                <div class="example-card positive">
+                  <div class="example-title">Etlon Coffee</div>
+                  <div class="example-meta">Санкт-Петербург   сеть кофе-баров   3 фото</div>
+                  <div class="example-id">uuid: 0004c100-2796-4c7d-90a1-c4274f174c53</div>
+                </div>
+                
+                <div class="example-card positive">
+                  <div class="example-title">Beersenev Bar</div>
+                  <div class="example-meta">Москва   бар крафтового пива и бургеров   3000 ₽   3 фото</div>
+                  <div class="example-id">uuid: 00067297-6732-4603-be82-4f66186f8874</div>
+                </div>
+                </div>
+              </div>
+              <div>
+                <div class="examples-col-title negative">✘ Нет / пустой список</div>
+                <div class="example-stack"><div class="example-card muted">Нет примеров</div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="scroll-section" id="fill" data-section="fill">
+        <h2 class="headline"><span class="section-index">5</span>Заполненность</h2>
+        <section class="section full">
+          <div class="section-head">Заполненность полей</div>
+          <div class="section-body">
+            <table class="fill-table"><thead><tr><th>Поле</th><th>Заполненность</th><th>Количество</th></tr></thead><tbody><tr><td>is_adult</td><td>100.00%</td><td>31 057</td></tr><tr><td>twogis_longitude</td><td>100.00%</td><td>31 057</td></tr><tr><td>is_premium</td><td>100.00%</td><td>31 057</td></tr><tr><td>twogis_latitude</td><td>100.00%</td><td>31 057</td></tr><tr><td>updated_at</td><td>100.00%</td><td>31 057</td></tr><tr><td>twogis_id</td><td>100.00%</td><td>31 057</td></tr><tr><td>location</td><td>100.00%</td><td>31 057</td></tr><tr><td>twogis_name</td><td>100.00%</td><td>31 057</td></tr><tr><td>is_coffee</td><td>100.00%</td><td>31 057</td></tr><tr><td>twogis_image_path</td><td>100.00%</td><td>31 057</td></tr><tr><td>is_net</td><td>100.00%</td><td>31 057</td></tr><tr><td>twogis_reviews_count</td><td>99.99%</td><td>31 053</td></tr><tr><td>twogis_rating</td><td>99.98%</td><td>31 052</td></tr><tr><td>twogis_tags</td><td>99.98%</td><td>31 050</td></tr><tr><td>merged_working_hours</td><td>99.90%</td><td>31 026</td></tr><tr><td>twogis_working_hours</td><td>99.83%</td><td>31 005</td></tr><tr><td>twogis_city_name</td><td>98.88%</td><td>30 709</td></tr><tr><td>twogis_address_name</td><td>98.85%</td><td>30 699</td></tr><tr><td>twogis_phone</td><td>89.16%</td><td>27 690</td></tr><tr><td>twogis_extention</td><td>87.34%</td><td>27 126</td></tr><tr><td>twogis_drinks</td><td>75.23%</td><td>23 363</td></tr><tr><td>merged_avg_bill</td><td>73.53%</td><td>22 837</td></tr><tr><td>twogis_avg_bill</td><td>68.44%</td><td>21 255</td></tr><tr><td>twogis_site</td><td>65.20%</td><td>20 249</td></tr><tr><td>twogis_dishes</td><td>63.81%</td><td>19 817</td></tr><tr><td>id</td><td>32.52%</td><td>10 099</td></tr><tr><td>city_id</td><td>32.52%</td><td>10 099</td></tr><tr><td>city_name</td><td>32.52%</td><td>10 099</td></tr><tr><td>address</td><td>32.52%</td><td>10 099</td></tr><tr><td>uri</td><td>32.52%</td><td>10 099</td></tr><tr><td>longitude</td><td>32.52%</td><td>10 099</td></tr><tr><td>latitude</td><td>32.52%</td><td>10 099</td></tr><tr><td>has_tomesto</td><td>32.52%</td><td>10 099</td></tr><tr><td>has_afisha_booking</td><td>32.52%</td><td>10 099</td></tr><tr><td>tags</td><td>32.52%</td><td>10 099</td></tr><tr><td>rating</td><td>32.52%</td><td>10 099</td></tr><tr><td>name</td><td>32.52%</td><td>10 099</td></tr><tr><td>working_hours_objects</td><td>32.37%</td><td>10 054</td></tr><tr><td>phone</td><td>31.51%</td><td>9 787</td></tr><tr><td>site</td><td>26.65%</td><td>8 276</td></tr><tr><td>cover_images</td><td>14.56%</td><td>4 521</td></tr><tr><td>confidence</td><td>13.74%</td><td>4 267</td></tr><tr><td>description</td><td>5.46%</td><td>1 695</td></tr><tr><td>restaurant_menu_objects</td><td>4.57%</td><td>1 418</td></tr><tr><td>menu_objects</td><td>2.21%</td><td>685</td></tr><tr><td>menu</td><td>1.89%</td><td>586</td></tr><tr><td>tomesto_url</td><td>1.53%</td><td>475</td></tr><tr><td>afisha_booking_url</td><td>0.20%</td><td>62</td></tr></tbody></table>
+          </div>
+        </section>
+      </section>
+
+      <section class="scroll-section" id="answers" data-section="answers">
+        <h2 class="headline"><span class="section-index">6</span>Примеры выдачи ответов</h2>
+        <div class="answer-list">
+          
+            <section class="answer-card">
+              <div class="answer-query-label">Запрос</div>
+              <div class="answer-query-head">
+                <div class="answer-query">Бургерная</div>
+                <div class="query-type-badge description">По описанию</div>
+              </div>
+              <div class="answer-filter-label">Фильтр</div>
+              <div class="answer-filter">
+        <div class="answer-filter-box pretty">
+          
+            <details class="filter-group-collapse level-0" open>
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">2 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <details class="filter-group-collapse level-1" open>
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">1 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-2">
+              <div class="filter-condition-field">merged_avg_bill</div>
+              <div class="filter-condition-op">&lt;</div>
+              <div class="filter-condition-value">3000.0</div>
+            </div>
+            </div>
+            </details>
+            
+            <div class="filter-condition-card level-1">
+              <div class="filter-condition-field">twogis_city_name</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">Санкт-Петербург</div>
+            </div>
+            </div>
+            </details>
+            
+          <details class="answer-filter-raw">
+            <summary>Показать raw filter</summary>
+            <pre>{
+  &quot;must&quot;: [
+    {
+      &quot;must&quot;: [
+        {
+          &quot;key&quot;: &quot;merged_avg_bill&quot;,
+          &quot;range&quot;: {
+            &quot;lt&quot;: 3000.0
+          }
+        }
+      ]
+    },
+    {
+      &quot;key&quot;: &quot;twogis_city_name&quot;,
+      &quot;match&quot;: {
+        &quot;value&quot;: &quot;Санкт-Петербург&quot;
+      }
+    }
+  ]
+}</pre>
+          </details>
+        </div>
+        </div>
+              <div class="answer-results">
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#1</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Бюро  </div>
+                      <div class="answer-sub">Санкт-Петербург · кафе-бар · набережная Обводного канала, 118 лит С, 1 этаж</div>
+                    </div>
+                    <div class="answer-score">0.918</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.5</span>
+                    <span>Отзывы: 75</span>
+                    <span>Средний чек: 650 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#2</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Johnny burgers  </div>
+                      <div class="answer-sub">Санкт-Петербург · бургерная · Комендантский проспект, 66 к1</div>
+                    </div>
+                    <div class="answer-score">0.901</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.7</span>
+                    <span>Отзывы: 133</span>
+                    <span>Средний чек: 500 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#3</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Burger Syndicate  </div>
+                      <div class="answer-sub">Санкт-Петербург · бургерная · Малая Бухарестская улица, 12 ст1</div>
+                    </div>
+                    <div class="answer-score">0.901</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.7</span>
+                    <span>Отзывы: 59</span>
+                    <span>Средний чек: 950 ₽</span>
+                  </div>
+                </div>
+                </div>
+            </section>
+            
+            <section class="answer-card">
+              <div class="answer-query-label">Запрос</div>
+              <div class="answer-query-head">
+                <div class="answer-query">Рыбный ресторан</div>
+                <div class="query-type-badge description">По описанию</div>
+              </div>
+              <div class="answer-filter-label">Фильтр</div>
+              <div class="answer-filter">
+        <div class="answer-filter-box pretty">
+          
+            <details class="filter-group-collapse level-0" open>
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">2 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <details class="filter-group-collapse level-1" >
+              <summary class="filter-group-summary should">
+                <span class="filter-group-title">ИЛИ</span>
+                <span class="filter-group-count">2 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-2">
+              <div class="filter-condition-field">is_premium</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">true</div>
+            </div>
+            
+            <details class="filter-group-collapse level-2" >
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">3 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">twogis_reviews_count</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">50.0</div>
+            </div>
+            
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">twogis_rating</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">4.9</div>
+            </div>
+            
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">merged_avg_bill</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">3000.0</div>
+            </div>
+            </div>
+            </details>
+            </div>
+            </details>
+            
+            <div class="filter-condition-card level-1">
+              <div class="filter-condition-field">twogis_city_name</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">Санкт-Петербург</div>
+            </div>
+            </div>
+            </details>
+            
+          <details class="answer-filter-raw">
+            <summary>Показать raw filter</summary>
+            <pre>{
+  &quot;must&quot;: [
+    {
+      &quot;should&quot;: [
+        {
+          &quot;key&quot;: &quot;is_premium&quot;,
+          &quot;match&quot;: {
+            &quot;value&quot;: true
+          }
+        },
+        {
+          &quot;must&quot;: [
+            {
+              &quot;key&quot;: &quot;twogis_reviews_count&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 50.0
+              }
+            },
+            {
+              &quot;key&quot;: &quot;twogis_rating&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 4.9
+              }
+            },
+            {
+              &quot;key&quot;: &quot;merged_avg_bill&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 3000.0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      &quot;key&quot;: &quot;twogis_city_name&quot;,
+      &quot;match&quot;: {
+        &quot;value&quot;: &quot;Санкт-Петербург&quot;
+      }
+    }
+  ]
+}</pre>
+          </details>
+        </div>
+        </div>
+              <div class="answer-results">
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#1</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Bellevue <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Санкт-Петербург · ресторан · набережная реки Мойки, 22, 9 этаж</div>
+                    </div>
+                    <div class="answer-score">0.872</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.1</span>
+                    <span>Отзывы: 62</span>
+                    <span>Средний чек: 3 000 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#2</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Важная Рыба <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Санкт-Петербург · суши-бар · Парфёновская улица, 7 к1 ст1</div>
+                    </div>
+                    <div class="answer-score">0.850</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.8</span>
+                    <span>Отзывы: 409</span>
+                    <span>Средний чек: 1 350 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#3</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Cristal <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Санкт-Петербург · панорамный ресторан · Синопская набережная, 10</div>
+                    </div>
+                    <div class="answer-score">0.849</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.9</span>
+                    <span>Отзывы: 12 277</span>
+                    <span>Средний чек: 6 000 ₽</span>
+                  </div>
+                </div>
+                </div>
+            </section>
+            
+            <section class="answer-card">
+              <div class="answer-query-label">Запрос</div>
+              <div class="answer-query-head">
+                <div class="answer-query">Ресторан азиатской кухни</div>
+                <div class="query-type-badge description">По описанию</div>
+              </div>
+              <div class="answer-filter-label">Фильтр</div>
+              <div class="answer-filter">
+        <div class="answer-filter-box pretty">
+          
+            <details class="filter-group-collapse level-0" open>
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">2 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <details class="filter-group-collapse level-1" >
+              <summary class="filter-group-summary should">
+                <span class="filter-group-title">ИЛИ</span>
+                <span class="filter-group-count">2 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-2">
+              <div class="filter-condition-field">is_premium</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">true</div>
+            </div>
+            
+            <details class="filter-group-collapse level-2" >
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">3 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">twogis_reviews_count</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">50.0</div>
+            </div>
+            
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">twogis_rating</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">4.9</div>
+            </div>
+            
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">merged_avg_bill</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">3000.0</div>
+            </div>
+            </div>
+            </details>
+            </div>
+            </details>
+            
+            <div class="filter-condition-card level-1">
+              <div class="filter-condition-field">twogis_city_name</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">Екатеринбург</div>
+            </div>
+            </div>
+            </details>
+            
+          <details class="answer-filter-raw">
+            <summary>Показать raw filter</summary>
+            <pre>{
+  &quot;must&quot;: [
+    {
+      &quot;should&quot;: [
+        {
+          &quot;key&quot;: &quot;is_premium&quot;,
+          &quot;match&quot;: {
+            &quot;value&quot;: true
+          }
+        },
+        {
+          &quot;must&quot;: [
+            {
+              &quot;key&quot;: &quot;twogis_reviews_count&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 50.0
+              }
+            },
+            {
+              &quot;key&quot;: &quot;twogis_rating&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 4.9
+              }
+            },
+            {
+              &quot;key&quot;: &quot;merged_avg_bill&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 3000.0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      &quot;key&quot;: &quot;twogis_city_name&quot;,
+      &quot;match&quot;: {
+        &quot;value&quot;: &quot;Екатеринбург&quot;
+      }
+    }
+  ]
+}</pre>
+          </details>
+        </div>
+        </div>
+              <div class="answer-results">
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#1</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Сойка <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Екатеринбург · ресторан · улица 8 Марта, 6, 1 этаж</div>
+                    </div>
+                    <div class="answer-score">0.891</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.4</span>
+                    <span>Отзывы: 583</span>
+                    <span>Средний чек: 3 000 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#2</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Su Mo <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Екатеринбург · японский и паназиатский ресторан · улица Хохрякова, 48, 2 этаж</div>
+                    </div>
+                    <div class="answer-score">0.884</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.5</span>
+                    <span>Отзывы: 189</span>
+                    <span>Средний чек: 3 000 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#3</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Ovo Izakaya <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Екатеринбург · ресторан · проспект Ленина, 25, 1 этаж</div>
+                    </div>
+                    <div class="answer-score">0.865</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 5.0</span>
+                    <span>Отзывы: 7 686</span>
+                    <span>Средний чек: 3 000 ₽</span>
+                  </div>
+                </div>
+                </div>
+            </section>
+            
+            <section class="answer-card">
+              <div class="answer-query-label">Запрос</div>
+              <div class="answer-query-head">
+                <div class="answer-query">Стейк-хаус</div>
+                <div class="query-type-badge description">По описанию</div>
+              </div>
+              <div class="answer-filter-label">Фильтр</div>
+              <div class="answer-filter">
+        <div class="answer-filter-box pretty">
+          
+            <details class="filter-group-collapse level-0" open>
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">2 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <details class="filter-group-collapse level-1" >
+              <summary class="filter-group-summary should">
+                <span class="filter-group-title">ИЛИ</span>
+                <span class="filter-group-count">2 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-2">
+              <div class="filter-condition-field">is_premium</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">true</div>
+            </div>
+            
+            <details class="filter-group-collapse level-2" >
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">3 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">twogis_reviews_count</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">50.0</div>
+            </div>
+            
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">twogis_rating</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">4.9</div>
+            </div>
+            
+            <div class="filter-condition-card level-3">
+              <div class="filter-condition-field">merged_avg_bill</div>
+              <div class="filter-condition-op">&gt;=</div>
+              <div class="filter-condition-value">3000.0</div>
+            </div>
+            </div>
+            </details>
+            </div>
+            </details>
+            
+            <div class="filter-condition-card level-1">
+              <div class="filter-condition-field">twogis_city_name</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">Новосибирск</div>
+            </div>
+            </div>
+            </details>
+            
+          <details class="answer-filter-raw">
+            <summary>Показать raw filter</summary>
+            <pre>{
+  &quot;must&quot;: [
+    {
+      &quot;should&quot;: [
+        {
+          &quot;key&quot;: &quot;is_premium&quot;,
+          &quot;match&quot;: {
+            &quot;value&quot;: true
+          }
+        },
+        {
+          &quot;must&quot;: [
+            {
+              &quot;key&quot;: &quot;twogis_reviews_count&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 50.0
+              }
+            },
+            {
+              &quot;key&quot;: &quot;twogis_rating&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 4.9
+              }
+            },
+            {
+              &quot;key&quot;: &quot;merged_avg_bill&quot;,
+              &quot;range&quot;: {
+                &quot;gte&quot;: 3000.0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      &quot;key&quot;: &quot;twogis_city_name&quot;,
+      &quot;match&quot;: {
+        &quot;value&quot;: &quot;Новосибирск&quot;
+      }
+    }
+  ]
+}</pre>
+          </details>
+        </div>
+        </div>
+              <div class="answer-results">
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#1</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Meaty Bar <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Новосибирск · мясистый бар · Семьи Шамшиных, 17а</div>
+                    </div>
+                    <div class="answer-score">0.830</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.6</span>
+                    <span>Отзывы: 827</span>
+                    <span>Средний чек: 1 300 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#2</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Goodman <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Новосибирск · стейк-хаус · Советская улица, 5, 1 этаж</div>
+                    </div>
+                    <div class="answer-score">0.828</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.7</span>
+                    <span>Отзывы: 1 105</span>
+                    <span>Средний чек: 6 000 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#3</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Кельн <span class="answer-badge premium">premium</span> </div>
+                      <div class="answer-sub">Новосибирск · гриль-бар · Учёных, 4</div>
+                    </div>
+                    <div class="answer-score">0.813</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.7</span>
+                    <span>Отзывы: 2 611</span>
+                    <span>Средний чек: 3 000 ₽</span>
+                  </div>
+                </div>
+                </div>
+            </section>
+            
+            <section class="answer-card">
+              <div class="answer-query-label">Запрос</div>
+              <div class="answer-query-head">
+                <div class="answer-query">Пельменная</div>
+                <div class="query-type-badge description">По описанию</div>
+              </div>
+              <div class="answer-filter-label">Фильтр</div>
+              <div class="answer-filter">
+        <div class="answer-filter-box pretty">
+          
+            <details class="filter-group-collapse level-0" open>
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">1 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-1">
+              <div class="filter-condition-field">twogis_city_name</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">Новосибирск</div>
+            </div>
+            </div>
+            </details>
+            
+          <details class="answer-filter-raw">
+            <summary>Показать raw filter</summary>
+            <pre>{
+  &quot;must&quot;: [
+    {
+      &quot;key&quot;: &quot;twogis_city_name&quot;,
+      &quot;match&quot;: {
+        &quot;value&quot;: &quot;Новосибирск&quot;
+      }
+    }
+  ]
+}</pre>
+          </details>
+        </div>
+        </div>
+              <div class="answer-results">
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#1</div>
+                    <div class="answer-main">
+                      <div class="answer-title">На фарше  </div>
+                      <div class="answer-sub">Новосибирск · пельменная · Военная улица, 5, 4 этаж; рядом с Суши Make</div>
+                    </div>
+                    <div class="answer-score">0.937</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 5.0</span>
+                    <span>Отзывы: 37</span>
+                    <span>Средний чек: 0 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#2</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Пельменная  </div>
+                      <div class="answer-sub">Новосибирск · — · Троллейная улица, 85</div>
+                    </div>
+                    <div class="answer-score">0.924</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.8</span>
+                    <span>Отзывы: 178</span>
+                    <span>Средний чек: 300 ₽</span>
+                  </div>
+                </div>
+                
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#3</div>
+                    <div class="answer-main">
+                      <div class="answer-title">На фарше  </div>
+                      <div class="answer-sub">Новосибирск · пельменная · улица Мичурина, 12, 1 этаж</div>
+                    </div>
+                    <div class="answer-score">0.914</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.8</span>
+                    <span>Отзывы: 322</span>
+                    <span>Средний чек: 500 ₽</span>
+                  </div>
+                </div>
+                </div>
+            </section>
+            
+            <section class="answer-card">
+              <div class="answer-query-label">Запрос</div>
+              <div class="answer-query-head">
+                <div class="answer-query">горожанне</div>
+                <div class="query-type-badge name">По названию</div>
+              </div>
+              <div class="answer-filter-label">Фильтр</div>
+              <div class="answer-filter">
+        <div class="answer-filter-box pretty">
+          
+            <details class="filter-group-collapse level-0" open>
+              <summary class="filter-group-summary must">
+                <span class="filter-group-title">И</span>
+                <span class="filter-group-count">1 условий</span>
+              </summary>
+              <div class="filter-group-grid">
+            <div class="filter-condition-card level-1">
+              <div class="filter-condition-field">twogis_city_name</div>
+              <div class="filter-condition-op">=</div>
+              <div class="filter-condition-value">Екатеринбург</div>
+            </div>
+            </div>
+            </details>
+            
+          <details class="answer-filter-raw">
+            <summary>Показать raw filter</summary>
+            <pre>{
+  &quot;must&quot;: [
+    {
+      &quot;key&quot;: &quot;twogis_city_name&quot;,
+      &quot;match&quot;: {
+        &quot;value&quot;: &quot;Екатеринбург&quot;
+      }
+    }
+  ]
+}</pre>
+          </details>
+        </div>
+        </div>
+              <div class="answer-results">
+                <div class="answer-item">
+                  <div class="answer-item-top">
+                    <div class="answer-rank">#1</div>
+                    <div class="answer-main">
+                      <div class="answer-title">Горожане  </div>
+                      <div class="answer-sub">Екатеринбург · бистро · улица Добролюбова, 6, 1 этаж</div>
+                    </div>
+                    <div class="answer-score">0.933</div>
+                  </div>
+                  <div class="answer-metrics">
+                    <span>Рейтинг: 4.7</span>
+                    <span>Отзывы: 1 696</span>
+                    <span>Средний чек: 3 000 ₽</span>
+                  </div>
+                </div>
+                </div>
+            </section>
+            
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const COLORS = {
+      text: "#445243",
+      grid: "rgba(33, 160, 56, 0.10)",
+      green: "#21a038",
+      greenSoft2: "rgba(33, 160, 56, 0.28)"
+    };
+
+    Chart.defaults.color = COLORS.text;
+    Chart.defaults.borderColor = COLORS.grid;
+    Chart.defaults.font.family = '"Inter", Arial, sans-serif';
+
+    function buildBarChart(id, labels, values, label) {
+      const canvas = document.getElementById(id);
+      if (!canvas) return;
+      new Chart(canvas, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: values,
+            backgroundColor: COLORS.greenSoft2,
+            borderColor: COLORS.green,
+            borderWidth: 1.5,
+            borderRadius: 10,
+            hoverBackgroundColor: COLORS.green
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { maxRotation: 35, minRotation: 0 }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 }
+            }
+          }
+        }
+      });
+    }
+
+    buildBarChart("dishesChart", ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "33", "37", "60"], [11240, 1617, 1696, 1973, 2023, 2025, 1791, 1567, 1643, 1190, 985, 778, 589, 454, 364, 300, 213, 163, 111, 96, 68, 56, 39, 19, 18, 10, 11, 6, 2, 3, 1, 2, 2, 1, 1], "Количество заведений");
+    buildBarChart("drinksChart", ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"], [7694, 2978, 9281, 4514, 1727, 1047, 864, 841, 703, 497, 389, 248, 148, 66, 43, 15, 2], "Количество заведений");
+    buildBarChart("citiesChart", ["Москва", "Санкт-Петербург", "Новосибирск", "Краснодар", "Казань", "Сочи", "Екатеринбург", "Красноярск", "Тюмень", "Уфа"], [6119, 5252, 1876, 1550, 1298, 1146, 1125, 1097, 1064, 953], "Количество заведений");
+    buildBarChart("avgBillChart", ["До 500 ₽", "500–999 ₽", "1000–1499 ₽", "1500–1999 ₽", "2000–2999 ₽", "3000–4999 ₽", "5000+ ₽"], [5759, 5161, 4337, 1031, 342, 5251, 956], "Количество заведений");
+
+    const menuItems = [...document.querySelectorAll('.menu-item[data-target]')];
+    const sections = [...document.querySelectorAll('.scroll-section[data-section]')];
+    const menuBar = document.getElementById('menuBar');
+    let manualScrollLock = false;
+
+    function setActiveTab(id) {
+      menuItems.forEach(item => {
+        item.classList.toggle('active', item.dataset.target === id);
+      });
+    }
+
+    menuItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const id = item.dataset.target;
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        manualScrollLock = true;
+        setActiveTab(id);
+
+        const offset = menuBar.offsetHeight + 16;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+
+        window.scrollTo({ top, behavior: 'smooth' });
+
+        window.setTimeout(() => {
+          manualScrollLock = false;
+        }, 700);
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      if (manualScrollLock) return;
+
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (visible.length) {
+        const id = visible[0].target.dataset.section;
+        setActiveTab(id);
+      }
+    }, {
+      root: null,
+      rootMargin: "-80px 0px -55% 0px",
+      threshold: [0.15, 0.3, 0.45, 0.6]
+    });
+
+    sections.forEach(section => observer.observe(section));
+
+    window.addEventListener('scroll', () => {
+      if (manualScrollLock) return;
+      const marker = window.scrollY + menuBar.offsetHeight + 40;
+      let current = sections[0]?.dataset.section;
+
+      sections.forEach(section => {
+        if (section.offsetTop <= marker) {
+          current = section.dataset.section;
+        }
+      });
+
+      if (current) setActiveTab(current);
+    }, { passive: true });
+  </script>
+</body>
+</html>
