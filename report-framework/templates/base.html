@@ -80,6 +80,21 @@
   // Component functions (inlined from bundle)
   {{ components_js|safe }}
 </script>
+<script>
+  // ✅ ВСТАВЬТЕ СЮДА функцию loadCollectionFields (код выше)
+
+  // Инициализация
+  document.addEventListener('DOMContentLoaded', () => {
+    const collectionSelect = document.getElementById('collection-select');
+    if (collectionSelect) {
+      collectionSelect.addEventListener('change', (e) => {
+        if (e.target.value) {
+          loadCollectionFields(e.target.value, 'chart-field-select');
+        }
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
