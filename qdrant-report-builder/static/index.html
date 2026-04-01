@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qdrant Report Builder</title>
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --bg: #f3f4f6;
+            --sidebar-bg: #1f2937;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-help {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Blocks Builder */
+        .blocks-container {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-height: 200px;
+            margin-bottom: 1.5rem;
+        }
+
+        .block-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .block-info {
+            flex: 1;
+        }
+
+        .block-type {
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .block-field {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .block-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Status badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Alert */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--text-light);
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--text);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">📊 Qdrant Reports</div>
+        
+        <nav class="nav-section">
+            <div class="nav-title">Меню</div>
+            <div class="nav-item active" data-page="collections">
+                <span>📁</span> Коллекции
+            </div>
+            <div class="nav-item" data-page="builder">
+                <span>🛠️</span> Конструктор
+            </div>
+            <div class="nav-item" data-page="configs">
+                <span>⚙️</span> Конфигурации
+            </div>
+            <div class="nav-item" data-page="reports">
+                <span>📄</span> Отчёты
+            </div>
+        </nav>
+
+        <nav class="nav-section">
+            <div class="nav-title">Настройки</div>
+            <div class="nav-item" id="qdrant-settings">
+                <span>🔧</span> Qdrant подключение
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Collections Page -->
+        <div id="page-collections" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Коллекции Qdrant</h1>
+                <p class="page-subtitle">Выберите коллекцию для создания отчёта</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Доступные коллекции</div>
+                <button class="btn btn-primary" onclick="loadCollections()">
+                    🔄 Обновить
+                </button>
+                <div id="collections-list" class="grid grid-3" style="margin-top: 1.5rem;">
+                    <!-- Collections will be loaded here -->
+                </div>
+            </div>
+
+            <div id="collection-details" class="card hidden">
+                <div class="card-title">
+                    <span id="selected-collection-name"></span>
+                    <span id="collection-status" class="badge badge-success" style="margin-left: 0.5rem;"></span>
+                </div>
+                <div class="grid grid-3">
+                    <div>
+                        <div class="form-label">Точек</div>
+                        <div id="collection-points" style="font-size: 1.5rem; font-weight: bold;">-</div>
+                    </div>
+                    <div>
+                        <div class="form-label">Векторов</div>
+                        <div id="collection-vectors" style="font-size: 1.5rem; font-weight: bold;">-</div>
+                    </div>
+                    <div>
+                        <div class="form-label">Полей payload</div>
+                        <div id="collection-fields-count" style="font-size: 1.5rem; font-weight: bold;">-</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem;">
+                    <div class="form-label">Поля payload</div>
+                    <div id="collection-fields" class="grid grid-3"></div>
+                </div>
+
+                <div style="margin-top: 1.5rem;">
+                    <button class="btn btn-primary" onclick="startBuilder()">
+                        🛠️ Создать отчёт
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Builder Page -->
+        <div id="page-builder" class="page hidden">
+            <div class="page-header">
+                <h1 class="page-title">Конструктор отчётов</h1>
+                <p class="page-subtitle">Настройте блоки и визуализацию вашего отчёта</p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-title">Основные настройки</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Название отчёта</label>
+                        <input type="text" id="report-name" class="form-input" placeholder="Мой отчёт">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Коллекция</label>
+                        <select id="builder-collection" class="form-select" onchange="loadCollectionFields()">
+                            <option value="">Выберите коллекцию</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Действия</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <button class="btn btn-primary" onclick="addBlock('kpi')">➕ Добавить KPI</button>
+                        <button class="btn btn-primary" onclick="addBlock('chart')">➕ Добавить график</button>
+                        <button class="btn btn-primary" onclick="addBlock('table')">➕ Добавить таблицу</button>
+                        <hr style="border: none; border-top: 1px solid var(--border);">
+                        <button class="btn btn-secondary" onclick="saveConfig()">💾 Сохранить конфигурацию</button>
+                        <button class="btn btn-primary" onclick="generateReport()">🚀 Сгенерировать отчёт</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Блоки отчёта</div>
+                <div id="blocks-container" class="blocks-container">
+                    <p style="color: var(--text-light); text-align: center;">
+                        Добавьте блоки с помощью кнопок выше
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configs Page -->
+        <div id="page-configs" class="page hidden">
+            <div class="page-header">
+                <h1 class="page-title">Сохранённые конфигурации</h1>
+                <p class="page-subtitle">Управляйте шаблонами отчётов</p>
+            </div>
+
+            <div class="card">
+                <button class="btn btn-primary" onclick="loadConfigs()">🔄 Обновить</button>
+                <div id="configs-list" style="margin-top: 1.5rem;">
+                    <!-- Configs will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Page -->
+        <div id="page-reports" class="page hidden">
+            <div class="page-header">
+                <h1 class="page-title">Сгенерированные отчёты</h1>
+                <p class="page-subtitle">Просмотр и загрузка отчётов</p>
+            </div>
+
+            <div class="card">
+                <div id="reports-list">
+                    <p style="color: var(--text-light); text-align: center;">
+                        Отчёты появятся здесь после генерации
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Block Configuration Modal -->
+    <div id="block-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Настройка блока</h2>
+            </div>
+            <div id="modal-content">
+                <!-- Dynamic content -->
+            </div>
+            <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+                <button class="btn btn-primary" onclick="saveBlock()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentBlocks = [];
+        let collections = [];
+        let currentConfigId = null;
+        let editingBlockIndex = null;
+
+        // API Base URL
+        const API_BASE = window.location.origin + '/api';
+
+        // Navigation
+        document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.dataset.page;
+                showPage(page);
+                
+                document.querySelectorAll('.nav-item[data-page]').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`page-${pageName}`).classList.remove('hidden');
+            
+            if (pageName === 'collections') loadCollections();
+            if (pageName === 'configs') loadConfigs();
+        }
+
+        // Load Collections
+        async function loadCollections() {
+            try {
+                const response = await fetch(`${API_BASE}/collections`);
+                const data = await response.json();
+                
+                collections = data.collections || [];
+                const container = document.getElementById('collections-list');
+                
+                if (collections.length === 0) {
+                    container.innerHTML = '<p style="color: var(--text-light);">Коллекции не найдены</p>';
+                    return;
+                }
+
+                container.innerHTML = collections.map(name => `
+                    <div class="card" style="cursor: pointer;" onclick="selectCollection('${name}')">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">📁 ${name}</div>
+                        <div class="badge badge-info">Нажмите для просмотра</div>
+                    </div>
+                `).join('');
+
+                // Update builder collection select
+                const builderSelect = document.getElementById('builder-collection');
+                builderSelect.innerHTML = '<option value="">Выберите коллекцию</option>' +
+                    collections.map(name => `<option value="${name}">${name}</option>`).join('');
+
+            } catch (error) {
+                console.error('Error loading collections:', error);
+                alert('Ошибка загрузки коллекций: ' + error.message);
+            }
+        }
+
+        // Select Collection
+        async function selectCollection(collectionName) {
+            try {
+                const response = await fetch(`${API_BASE}/collections/${collectionName}/schema`);
+                const data = await response.json();
+
+                document.getElementById('collection-details').classList.remove('hidden');
+                document.getElementById('selected-collection-name').textContent = data.collection_name;
+                document.getElementById('collection-status').textContent = data.status;
+                document.getElementById('collection-points').textContent = data.points_count?.toLocaleString() || '-';
+                document.getElementById('collection-vectors').textContent = data.vectors_count?.toLocaleString() || '-';
+                document.getElementById('collection-fields-count').textContent = data.payload_fields.length;
+
+                const fieldsContainer = document.getElementById('collection-fields');
+                fieldsContainer.innerHTML = data.payload_fields.map(field => `
+                    <div class="badge badge-info" style="padding: 0.5rem 1rem; margin: 0.25rem;">
+                        ${field} (${data.field_types[field] || 'unknown'})
+                    </div>
+                `).join('');
+
+                // Pre-select in builder
+                document.getElementById('builder-collection').value = collectionName;
+                loadCollectionFields();
+
+            } catch (error) {
+                alert('Ошибка загрузки информации о коллекции: ' + error.message);
+            }
+        }
+
+        // Load Collection Fields
+        async function loadCollectionFields() {
+            const collectionName = document.getElementById('builder-collection').value;
+            if (!collectionName) return;
+
+            // Will be loaded when user selects collection
+        }
+
+        // Start Builder
+        function startBuilder() {
+            showPage('builder');
+            document.querySelector('[data-page="builder"]').classList.add('active');
+            document.querySelector('[data-page="collections"]').classList.remove('active');
+        }
+
+        // Add Block
+        function addBlock(type) {
+            editingBlockIndex = currentBlocks.length;
+            openBlockModal(type);
+        }
+
+        // Open Block Modal
+        function openBlockModal(type, index = null) {
+            const modal = document.getElementById('block-modal');
+            const content = document.getElementById('modal-content');
+            const title = document.getElementById('modal-title');
+            
+            editingBlockIndex = index !== null ? index : currentBlocks.length;
+            
+            let block = index !== null ? currentBlocks[index] : { type };
+            
+            title.textContent = `Настройка: ${type.toUpperCase()}`;
+            
+            // Get available fields
+            const collectionName = document.getElementById('builder-collection').value;
+            
+            if (type === 'kpi') {
+                content.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Заголовок</label>
+                        <input type="text" id="block-title" class="form-input" value="${block.title || ''}" placeholder="Общее количество">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Поле</label>
+                        <select id="block-field" class="form-select">
+                            <option value="">Не выбрано</option>
+                            ${getFieldsOptions(collectionName, block.field)}
+                        </select>
+                        <div class="form-help">Поле для агрегации (опционально)</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Тип агрегации</label>
+                        <select id="block-aggregation" class="form-select">
+                            <option value="count" ${block.aggregation === 'count' ? 'selected' : ''}>COUNT (количество)</option>
+                            <option value="sum" ${block.aggregation === 'sum' ? 'selected' : ''}>SUM (сумма)</option>
+                            <option value="avg" ${block.aggregation === 'avg' ? 'selected' : ''}>AVG (среднее)</option>
+                            <option value="unique" ${block.aggregation === 'unique' ? 'selected' : ''}>UNIQUE (уникальные)</option>
+                        </select>
+                    </div>
+                `;
+            } else if (type === 'chart') {
+                content.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Заголовок</label>
+                        <input type="text" id="block-title" class="form-input" value="${block.title || ''}" placeholder="Распределение по категориям">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Поле</label>
+                        <select id="block-field" class="form-select">
+                            ${getFieldsOptions(collectionName, block.field)}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Тип графика</label>
+                        <select id="block-chart-type" class="form-select">
+                            <option value="bar" ${block.chart_type === 'bar' ? 'selected' : ''}>Столбчатый (Bar)</option>
+                            <option value="pie" ${block.chart_type === 'pie' ? 'selected' : ''}>Круговой (Pie)</option>
+                            <option value="line" ${block.chart_type === 'line' ? 'selected' : ''}>Линейный (Line)</option>
+                            <option value="doughnut" ${block.chart_type === 'doughnut' ? 'selected' : ''}>Кольцевой (Doughnut)</option>
+                        </select>
+                    </div>
+                `;
+            } else if (type === 'table') {
+                content.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Заголовок</label>
+                        <input type="text" id="block-title" class="form-input" value="${block.title || 'Данные'}" placeholder="Таблица данных">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Колонки (через запятую)</label>
+                        <input type="text" id="block-columns" class="form-input" value="${block.columns ? block.columns.map(c => c.field || c).join(', ') : ''}" placeholder="field1, field2, field3">
+                        <div class="form-help">Перечислите поля payload для отображения</div>
+                    </div>
+                `;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        // Get Fields Options
+        function getFieldsOptions(collectionName, selectedField = null) {
+            // This would ideally fetch actual fields from the collection
+            // For now, we'll use a placeholder
+            return '<option value="id">id</option>';
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('block-modal').classList.add('hidden');
+            editingBlockIndex = null;
+        }
+
+        // Save Block
+        function saveBlock() {
+            const type = currentBlocks[editingBlockIndex]?.type;
+            const title = document.getElementById('block-title')?.value;
+            const field = document.getElementById('block-field')?.value;
+            
+            let block = { type, title };
+            
+            if (type === 'kpi') {
+                block.field = field;
+                block.aggregation = document.getElementById('block-aggregation').value;
+            } else if (type === 'chart') {
+                block.field = field;
+                block.chart_type = document.getElementById('block-chart-type').value;
+            } else if (type === 'table') {
+                const columnsStr = document.getElementById('block-columns').value;
+                block.columns = columnsStr.split(',').map(s => ({ field: s.trim(), title: s.trim() }));
+            }
+
+            if (editingBlockIndex < currentBlocks.length) {
+                currentBlocks[editingBlockIndex] = block;
+            } else {
+                currentBlocks.push(block);
+            }
+
+            renderBlocks();
+            closeModal();
+        }
+
+        // Render Blocks
+        function renderBlocks() {
+            const container = document.getElementById('blocks-container');
+            
+            if (currentBlocks.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); text-align: center;">Добавьте блоки с помощью кнопок выше</p>';
+                return;
+            }
+
+            container.innerHTML = currentBlocks.map((block, index) => `
+                <div class="block-item">
+                    <div class="block-info">
+                        <div class="block-type">${block.type}</div>
+                        <div class="block-field">${block.title || 'Без названия'} ${block.field ? `(${block.field})` : ''}</div>
+                    </div>
+                    <div class="block-actions">
+                        <button class="btn btn-sm btn-secondary" onclick="editBlock(${index})">✏️</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteBlock(${index})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Edit Block
+        function editBlock(index) {
+            const block = currentBlocks[index];
+            openBlockModal(block.type, index);
+        }
+
+        // Delete Block
+        function deleteBlock(index) {
+            currentBlocks.splice(index, 1);
+            renderBlocks();
+        }
+
+        // Save Config
+        async function saveConfig() {
+            const collectionName = document.getElementById('builder-collection').value;
+            const reportName = document.getElementById('report-name').value;
+
+            if (!collectionName) {
+                alert('Выберите коллекцию');
+                return;
+            }
+
+            const config = {
+                name: reportName || 'Без названия',
+                collection_name: collectionName,
+                blocks: currentBlocks
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/configs`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+
+                const data = await response.json();
+                alert(`Конфигурация сохранена! ID: ${data.id}`);
+                currentConfigId = data.id;
+            } catch (error) {
+                alert('Ошибка сохранения: ' + error.message);
+            }
+        }
+
+        // Generate Report
+        async function generateReport() {
+            const collectionName = document.getElementById('builder-collection').value;
+            const reportName = document.getElementById('report-name').value;
+
+            if (!collectionName) {
+                alert('Выберите коллекцию');
+                return;
+            }
+
+            if (currentBlocks.length === 0) {
+                alert('Добавьте хотя бы один блок');
+                return;
+            }
+
+            const config = {
+                name: reportName || 'Без названия',
+                collection_name: collectionName,
+                blocks: currentBlocks
+            };
+
+            try {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '⏳ Генерация...';
+                btn.disabled = true;
+
+                const response = await fetch(`${API_BASE}/generate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`Отчёт сгенерирован! Обработано точек: ${data.points_processed}`);
+                    window.open(data.download_url, '_blank');
+                } else {
+                    alert('Ошибка: ' + (data.error || 'Неизвестная ошибка'));
+                }
+
+                btn.textContent = originalText;
+                btn.disabled = false;
+            } catch (error) {
+                alert('Ошибка генерации: ' + error.message);
+            }
+        }
+
+        // Load Configs
+        async function loadConfigs() {
+            try {
+                const response = await fetch(`${API_BASE}/configs`);
+                const data = await response.json();
+
+                const container = document.getElementById('configs-list');
+                
+                if (!data.configs || data.configs.length === 0) {
+                    container.innerHTML = '<p style="color: var(--text-light);">Нет сохранённых конфигураций</p>';
+                    return;
+                }
+
+                container.innerHTML = data.configs.map(config => `
+                    <div class="card" style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600;">${config.name || 'Без названия'}</div>
+                                <div style="color: var(--text-light); font-size: 0.875rem;">
+                                    Коллекция: ${config.collection_name} | Блоков: ${config.blocks?.length || 0}
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn btn-sm btn-secondary" onclick="loadConfig('${config.id}')">Загрузить</button>
+                                <button class="btn btn-sm btn-primary" onclick="generateFromConfig('${config.id}')">Генерировать</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading configs:', error);
+            }
+        }
+
+        // Load Config
+        async function loadConfig(configId) {
+            try {
+                const response = await fetch(`${API_BASE}/configs/${configId}`);
+                const config = await response.json();
+
+                document.getElementById('report-name').value = config.name || '';
+                document.getElementById('builder-collection').value = config.collection_name || '';
+                currentBlocks = config.blocks || [];
+                renderBlocks();
+
+                showPage('builder');
+                document.querySelector('[data-page="builder"]').classList.add('active');
+                document.querySelector('[data-page="configs"]').classList.remove('active');
+            } catch (error) {
+                alert('Ошибка загрузки конфигурации: ' + error.message);
+            }
+        }
+
+        // Generate From Config
+        async function generateFromConfig(configId) {
+            try {
+                const response = await fetch(`${API_BASE}/configs/${configId}`);
+                const config = await response.json();
+
+                const genResponse = await fetch(`${API_BASE}/generate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+
+                const data = await genResponse.json();
+                
+                if (data.success) {
+                    window.open(data.download_url, '_blank');
+                } else {
+                    alert('Ошибка: ' + (data.error || 'Неизвестная ошибка'));
+                }
+            } catch (error) {
+                alert('Ошибка генерации: ' + error.message);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCollections();
+        });
+    </script>
+</body>
+</html>
