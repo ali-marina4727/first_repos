@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang='ru'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <title>Отчёт — hotels_dictionaries_23032026</title>
+  <link href='https://fonts.googleapis.com/css2?family=PT+Root+UI:wght@300;400;500;700&display=swap' rel='stylesheet'>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js'></script>
+  <style>
+    :root{--g: #21A038;--gd: #0d4d1a;--gm: #1a7d2c;--gl: #e8f7ec;--gp: #f2faf4;--y: #f5a623;--r: #d0021b;--b: #0077cc;--pu: #7c3aed;--tx: #1a1a1a;--mu: #6b7280;--lt: #9ca3af;--br: #e5e7eb;--bg: #f8f9fa;--wh: #fff;--f: 'PT Root UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;--sh0: 0 1px 3px rgba(0, 0, 0, .08);--sh1: 0 4px 16px rgba(0, 0, 0, .1);--r8: 8px;--r12: 12px}*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.5;font-size:14px}.hdr{background:linear-gradient(135deg, var(--gd) 0%, var(--gm) 45%, var(--g) 100%);color:#fff;position:relative;overflow:hidden}.hdr::before{content:"";position:absolute;border-radius:50%;background:hsla(0,0%,100%,.04);width:420px;height:420px;top:-80px;right:-60px;pointer-events:none}.hdr-inner{max-width:1200px;margin:0 auto;padding:30px 32px 26px;display:flex;align-items:center;gap:20px;position:relative;z-index:1;flex-wrap:wrap}.hdr-info{flex:1;min-width:200px}.hdr-badge{display:inline-flex;align-items:center;gap:6px;background:hsla(0,0%,100%,.15);border:1px solid hsla(0,0%,100%,.25);border-radius:20px;padding:3px 12px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.hdr-badge .dot{width:6px;height:6px;border-radius:50%;background:#a3cd39;animation:blink 2s ease-in-out infinite}.hdr h1{font-size:clamp(17px,3vw,24px);font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}.hdr-meta{font-size:12px;opacity:.8;display:flex;gap:14px;flex-wrap:wrap}.hdr-nums{display:flex;gap:2px;flex-wrap:wrap}.hdr-num{background:hsla(0,0%,100%,.12);border:1px solid hsla(0,0%,100%,.18);border-radius:var(--r8);padding:10px 14px;text-align:center;min-width:80px}.hdr-num-v{font-size:18px;font-weight:700;letter-spacing:-0.03em;display:block}.hdr-num-l{font-size:9px;opacity:.7;text-transform:uppercase;letter-spacing:.06em}@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}.nav{background:var(--wh);border-bottom:1px solid var(--br);position:sticky;top:0;z-index:100;box-shadow:var(--sh0)}.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;overflow-x:auto}.nav-a{padding:11px 15px;font-size:13px;font-weight:500;color:var(--mu);cursor:pointer;white-space:nowrap;border-bottom:2px solid rgba(0,0,0,0);transition:.2s;text-decoration:none;display:block}.nav-a:hover,.nav-a.on{color:var(--g)}.nav-a.on{border-bottom-color:var(--g)}.main{max-width:1200px;margin:0 auto;padding:26px 32px 64px}.sec{margin-bottom:42px}.sec-ttl{font-size:17px;font-weight:700;letter-spacing:-0.01em;margin-bottom:16px;display:flex;align-items:center;gap:10px}.sec-ttl .n{background:var(--g);color:#fff;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.g4{display:grid;grid-template-columns:repeat(4, 1fr);gap:14px}@media(max-width: 900px){.g2,.g3,.g4{grid-template-columns:1fr}}.card{background:var(--wh);border:1px solid var(--br);border-radius:var(--r12);box-shadow:var(--sh0);overflow:hidden}.card-h{padding:10px 16px;border-bottom:1px solid var(--br);font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;background:var(--gp)}.card-b{padding:14px}.kpi{background:var(--wh);border:1px solid var(--br);border-radius:var(--r12);padding:14px 16px;box-shadow:var(--sh0);position:relative;overflow:hidden;transition:.2s}.kpi:hover{box-shadow:var(--sh1);transform:translateY(-1px)}.kpi::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px}.kpi.g::after{background:var(--g)}.kpi.y::after{background:var(--y)}.kpi.b::after{background:var(--b)}.kpi.pu::after{background:var(--pu)}.kpi.r::after{background:var(--r)}.kpi-l{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--mu);margin-bottom:4px}.kpi-v{font-size:24px;font-weight:700;letter-spacing:-0.04em;line-height:1;margin-bottom:3px}.kpi.g .kpi-v{color:var(--g)}.kpi.y .kpi-v{color:var(--y)}.kpi.b .kpi-v{color:var(--b)}.kpi.pu .kpi-v{color:var(--pu)}.kpi.r .kpi-v{color:var(--r)}.kpi-s{font-size:11px;color:var(--mu)}.br{display:grid;grid-template-columns:180px 1fr 72px;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--br)}.br:last-child{border-bottom:none}.br:hover{background:var(--gl);margin:0 -14px;padding-left:14px;padding-right:14px;border-radius:4px}.br-l{font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.br-t{height:7px;background:#eef0f2;border-radius:4px;overflow:hidden}.br-f{height:100%;border-radius:4px}.br-v{font-size:11px;color:var(--mu);text-align:right}table{width:100%;border-collapse:collapse;font-size:13px}thead tr{background:var(--gp)}th{padding:8px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);border-bottom:2px solid var(--br);white-space:nowrap}td{padding:7px 12px;border-bottom:1px solid var(--br)}tr:last-child td{border-bottom:none}tr:hover td{background:var(--gl)}.tr{text-align:right}.tm{color:var(--mu);text-align:right}.bdg{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}.bdg-ha{background:#e8f7ec;color:var(--g)}.bdg-ra{background:#fff8ec;color:#b87a00}.bdg-ci{background:#eff6ff;color:var(--b)}.bdg-ot{background:#f3f4f6;color:var(--mu)}footer{border-top:1px solid var(--br);padding:20px 0;margin-top:28px;text-align:center;font-size:12px;color:var(--mu)}::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:#c8e6cf;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--g)}
+
+/*# sourceMappingURL=styles.css.map*/
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class='hdr'>
+  <div class='hdr-inner'>
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48">
+        <defs>
+          <linearGradient id="hd" x1="5.82" x2="10.35" y1="18.55" y2="17.93" gradientTransform="matrix(4.76,0,0,2.87,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#A3CD39" offset=".12"/><stop stop-color="#86C339" offset=".28"/><stop stop-color="#21A038" offset=".87"/></linearGradient>
+          <linearGradient id="he" x1="2.28" x2="6.28" y1="2.9" y2="1.98" gradientTransform="matrix(4.76,0,0,2.87,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#0FA8E0" offset=".06"/><stop stop-color="#0099F9" offset=".54"/><stop stop-color="#0291EB" offset=".92"/></linearGradient>
+          <linearGradient id="hf" x1="2.86" x2="1.92" y1="10.44" y2="5.94" gradientTransform="matrix(2.87,0,0,4.76,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#F2E913" offset=".14"/><stop stop-color="#CADB26" offset=".58"/><stop stop-color="#A3CD39" offset=".89"/></linearGradient>
+          <linearGradient id="ha" x1="1.83" x2="2.98" y1="6.7" y2="2.12" gradientTransform="matrix(2.99,0,0,4.57,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#A3CD39" offset=".07"/><stop stop-color="#81C55F" offset=".26"/><stop stop-color="#0FA8E0" offset=".92"/></linearGradient>
+          <linearGradient id="hb" x1="2.1" x2="6.48" y1="16.89" y2="17.96" gradientTransform="matrix(4.57,0,0,2.99,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#F2E913" offset=".13"/><stop stop-color="#BBD62D" offset=".8"/><stop stop-color="#A3CD39" offset=".98"/></linearGradient>
+          <linearGradient id="hc" x1="5.82" x2="9.63" y1="1.7" y2="2.38" gradientTransform="matrix(4.84,0,0,2.82,9.65,10.25)" gradientUnits="userSpaceOnUse"><stop stop-color="#0291EB" offset=".06"/><stop stop-color="#0C8ACB" offset=".79"/></linearGradient>
+        </defs>
+        <path d="m62.45 22.14 3.52 5.83-26.66 19.67-11.19-7.04v-8.42l11.14 6.98z" fill="#21a038"/>
+        <path d="m16.75 40.02c0-.4 0-.75.06-1.15l-6.75-.35c0 .46-.06.98-.06 1.44 0 8.08 3.29 15.41 8.6 20.71l4.79-4.79c-4.1-4.04-6.64-9.64-6.64-15.87z" fill="url(#hf)"/>
+        <path d="m39.25 17.52c.4 0 .75 0 1.15.06l.35-6.75c-.46 0-.98-.06-1.44-.06-8.08 0-15.41 3.29-20.71 8.6l4.79 4.79c4.04-4.1 9.69-6.64 15.86-6.64z" fill="url(#he)"/>
+        <path d="m39.25 62.53c-.4 0-.75 0-1.15-.06l-.35 6.75c.46 0 .98.06 1.44.06 8.08 0 15.41-3.29 20.71-8.6l-4.79-4.79c-4.04 4.15-9.64 6.64-15.86 6.64z" fill="url(#hd)"/>
+        <path d="m51.95 21.45 5.71-4.21c-5.02-4.04-11.42-6.52-18.41-6.52v6.75c4.73.06 9.12 1.5 12.7 3.98z" fill="url(#hc)"/>
+        <path d="m68.56 40.02c0-1.79-.17-3.52-.46-5.25l-6.29 4.67v.58c0 6.64-2.88 12.58-7.44 16.67l4.56 5.02c5.89-5.31 9.63-13.1 9.63-21.69z" fill="#21a038"/>
+        <path d="m39.25 62.53c-6.64 0-12.58-2.88-16.68-7.44l-5.02 4.56c5.37 5.94 13.1 9.64 21.7 9.64z" fill="url(#hb)"/>
+        <path d="m24.19 23.35-4.56-5.02c-5.94 5.37-9.64 13.1-9.64 21.69h6.75c0-6.58 2.88-12.58 7.45-16.67z" fill="url(#ha)"/>
+      </svg>
+    </div>
+    <div class='hdr-info'>
+      <div class='hdr-badge'><span class='dot'></span>Коллекция активна</div>
+      <h1>Словарная коллекция — аналитика</h1>
+      <div class='hdr-meta'>
+        
+        <span>📦 hotels_dictionaries_23032026</span>
+        
+        <span>🗓 2026-03-26 16:08</span>
+        
+        <span>⚡ GigaChat EmbeddingsGigaR</span>
+        
+      </div>
+    </div>
+    <div class='hdr-nums'>
+      
+      <div class='hdr-num'>
+        <span class='hdr-num-v' id='kpi-total'>3315</span>
+        <span class='hdr-num-l' id='kpi-total-lbl'>Всего</span>
+      </div>
+      
+      <div class='hdr-num'>
+        <span class='hdr-num-v' id='kpi-c0'>3014</span>
+        <span class='hdr-num-l' id='kpi-c0-lbl'>city</span>
+      </div>
+      
+      <div class='hdr-num'>
+        <span class='hdr-num-v' id='kpi-c1'>14</span>
+        <span class='hdr-num-l' id='kpi-c1-lbl'>accommodation</span>
+      </div>
+      
+      <div class='hdr-num'>
+        <span class='hdr-num-v' id='kpi-c2'>44</span>
+        <span class='hdr-num-l' id='kpi-c2-lbl'>hotel_amenity</span>
+      </div>
+      
+      <div class='hdr-num'>
+        <span class='hdr-num-v' id='kpi-c3'>237</span>
+        <span class='hdr-num-l' id='kpi-c3-lbl'>room_amenity</span>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class='nav'>
+  <div class='nav-inner'>
+    
+    <a class='nav-a on' data-sec='sec-fill'>Заполненность</a>
+    
+    <a class='nav-a ' data-sec='sec-cats'>По категориям</a>
+    
+    <a class='nav-a ' data-sec='sec-syndist'>Синонимы</a>
+    
+    <a class='nav-a ' data-sec='sec-rich'>Богатые / бедные</a>
+    
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class='main'>
+
+  <!-- Section 1: Fill Summary -->
+  <div id='sec-fill' class='sec'>
+    <div class='sec-ttl'><span class='n'>1</span>Заполненность полей</div>
+    <div id='fill-section'><div class="g3">
+                    <div class="card">
+                        <div class="card-h">Ключевое поле</div>
+                        <div class="card-b">
+                            <div class="br">
+                                <div class="br-l">Заполнено</div>
+                                <div class="br-t"><div class="br-f" style="width:100.0%;background:#21A038"></div></div>
+                                <div class="br-v">3,315</div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-h">Синонимы</div>
+                        <div class="card-b">
+                            <div class="br">
+                                <div class="br-l">Много синонимов</div>
+                                <div class="br-t"><div class="br-f" style="width:99.79%;background:#21A038"></div></div>
+                                <div class="br-v">99.8%</div>
+                            </div>
+                            <div class="br">
+                                <div class="br-l">1 синоним</div>
+                                <div class="br-t"><div class="br-f" style="width:0.21%;background:#f5a623"></div></div>
+                                <div class="br-v">0.2%</div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-h">Статистика</div>
+                        <div class="card-b">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+                                <div><strong>Min:</strong> 1</div>
+                                <div><strong>Max:</strong> 64</div>
+                                <div><strong>Avg:</strong> 5.79</div>
+                                <div><strong>P50:</strong> 6</div>
+                            </div>
+                        </div>
+                    </div>
+                </div></div>
+  </div>
+
+  <!-- Section 2: Category Stats -->
+  <div id='sec-cats' class='sec'>
+    <div class='sec-ttl'><span class='n'>2</span>Статистика по категориям</div>
+    <div id='cat-section' class='g3'>
+                    <div class="card">
+                        <div class="card-h">city</div>
+                        <div class="card-b">
+                            <div class="kpi g" style="margin-bottom:12px">
+                                <div class="kpi-l">Записей</div>
+                                <div class="kpi-v">3,014</div>
+                            </div>
+                            <div style="font-size:12px;color:var(--mu)">
+                                <div>Среднее кол-во синонимов: <strong>5.66</strong></div>
+                                <div>Без синонимов: <strong>0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-h">accommodation</div>
+                        <div class="card-b">
+                            <div class="kpi g" style="margin-bottom:12px">
+                                <div class="kpi-l">Записей</div>
+                                <div class="kpi-v">14</div>
+                            </div>
+                            <div style="font-size:12px;color:var(--mu)">
+                                <div>Среднее кол-во синонимов: <strong>6.00</strong></div>
+                                <div>Без синонимов: <strong>0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-h">hotel_amenity</div>
+                        <div class="card-b">
+                            <div class="kpi g" style="margin-bottom:12px">
+                                <div class="kpi-l">Записей</div>
+                                <div class="kpi-v">44</div>
+                            </div>
+                            <div style="font-size:12px;color:var(--mu)">
+                                <div>Среднее кол-во синонимов: <strong>5.89</strong></div>
+                                <div>Без синонимов: <strong>0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-h">room_amenity</div>
+                        <div class="card-b">
+                            <div class="kpi g" style="margin-bottom:12px">
+                                <div class="kpi-l">Записей</div>
+                                <div class="kpi-v">237</div>
+                            </div>
+                            <div style="font-size:12px;color:var(--mu)">
+                                <div>Среднее кол-во синонимов: <strong>5.97</strong></div>
+                                <div>Без синонимов: <strong>0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-h">room_class</div>
+                        <div class="card-b">
+                            <div class="kpi g" style="margin-bottom:12px">
+                                <div class="kpi-l">Записей</div>
+                                <div class="kpi-v">6</div>
+                            </div>
+                            <div style="font-size:12px;color:var(--mu)">
+                                <div>Среднее кол-во синонимов: <strong>58.17</strong></div>
+                                <div>Без синонимов: <strong>0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+  </div>
+
+  <!-- Section 3: Synonym Distribution -->
+  <div id='sec-syndist' class='sec'>
+    <div class='sec-ttl'><span class='n'>3</span>Распределение по количеству синонимов</div>
+    <div class='card'><div class='card-b' id='syndist-section'>
+                    <div class="br">
+                        <div class="br-l">1 синоним</div>
+                        <div class="br-t"><div class="br-f" style="width:0.25584795321637427%;background:#f5a623"></div></div>
+                        <div class="br-v">7 (0.21%)</div>
+                    </div>
+                
+                    <div class="br">
+                        <div class="br-l">4 синонимов</div>
+                        <div class="br-t"><div class="br-f" style="width:15.460526315789474%;background:#21A038"></div></div>
+                        <div class="br-v">423 (12.76%)</div>
+                    </div>
+                
+                    <div class="br">
+                        <div class="br-l">5 синонимов</div>
+                        <div class="br-t"><div class="br-f" style="width:5.226608187134503%;background:#21A038"></div></div>
+                        <div class="br-v">143 (4.31%)</div>
+                    </div>
+                
+                    <div class="br">
+                        <div class="br-l">6 синонимов</div>
+                        <div class="br-t"><div class="br-f" style="width:100.0%;background:#21A038"></div></div>
+                        <div class="br-v">2,736 (82.53%)</div>
+                    </div>
+                
+                    <div class="br">
+                        <div class="br-l">49 синонимов</div>
+                        <div class="br-t"><div class="br-f" style="width:0.03654970760233918%;background:#21A038"></div></div>
+                        <div class="br-v">1 (0.03%)</div>
+                    </div>
+                
+                    <div class="br">
+                        <div class="br-l">52 синонимов</div>
+                        <div class="br-t"><div class="br-f" style="width:0.03654970760233918%;background:#21A038"></div></div>
+                        <div class="br-v">1 (0.03%)</div>
+                    </div>
+                
+                    <div class="br">
+                        <div class="br-l">60 синонимов</div>
+                        <div class="br-t"><div class="br-f" style="width:0.03654970760233918%;background:#21A038"></div></div>
+                        <div class="br-v">1 (0.03%)</div>
+                    </div>
+                
+                    <div class="br">
+                        <div class="br-l">62 синонимов</div>
+                        <div class="br-t"><div class="br-f" style="width:0.07309941520467836%;background:#21A038"></div></div>
+                        <div class="br-v">2 (0.06%)</div>
+                    </div>
+                
+                    <div class="br">
+                        <div class="br-l">64 синонимов</div>
+                        <div class="br-t"><div class="br-f" style="width:0.03654970760233918%;background:#21A038"></div></div>
+                        <div class="br-v">1 (0.03%)</div>
+                    </div>
+                </div></div>
+  </div>
+
+  <!-- Section 4: Rich/Poor Entries -->
+  <div id='sec-rich' class='sec'>
+    <div class='sec-ttl'><span class='n'>4</span>Записи по наполненности синонимами</div>
+    <div class='g2'>
+      <div>
+        <div style='font-weight:600;font-size:13px;color:var(--g);margin-bottom:10px'>🏆 Наибольшее число синонимов</div>
+        <div id='richest-section'>
+                <div class="sq" style="margin-bottom:10px">
+                    <div class="sq-body">
+                        <div class="sq-r" style="border-left:3px solid #21A038">
+                            <div style="font-weight:600;font-size:13px;margin-bottom:4px">luxury</div>
+                            <div style="font-size:11px;color:var(--mu);margin-bottom:6px">
+                                <span class="bdg bdg-ci">room_class</span>
+                                <span style="margin-left:8px">64 синонимов</span>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                                <span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">люкс</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">luxury</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">deluxe</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">делюкс</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">де люкс</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">de luxe</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">suite</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">сюит</span>
+                                <span style="font-size:11px;color:var(--lt)">+ещё 56</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="sq" style="margin-bottom:10px">
+                    <div class="sq-body">
+                        <div class="sq-r" style="border-left:3px solid #21A038">
+                            <div style="font-weight:600;font-size:13px;margin-bottom:4px">economy</div>
+                            <div style="font-size:11px;color:var(--mu);margin-bottom:6px">
+                                <span class="bdg bdg-ci">room_class</span>
+                                <span style="margin-left:8px">62 синонимов</span>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                                <span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">эконом</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">бюджет</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">базовый</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">простой</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">туристический</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">туркласс</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">койко-место</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">койка</span>
+                                <span style="font-size:11px;color:var(--lt)">+ещё 54</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="sq" style="margin-bottom:10px">
+                    <div class="sq-body">
+                        <div class="sq-r" style="border-left:3px solid #21A038">
+                            <div style="font-weight:600;font-size:13px;margin-bottom:4px">vip</div>
+                            <div style="font-size:11px;color:var(--mu);margin-bottom:6px">
+                                <span class="bdg bdg-ci">room_class</span>
+                                <span style="margin-left:8px">62 синонимов</span>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                                <span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">vip</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">ви-ай-пи</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">представительский</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">президентский</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">presidential</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">exclusive</span>
+                                <span style="font-size:11px;color:var(--lt)">+ещё 54</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="sq" style="margin-bottom:10px">
+                    <div class="sq-body">
+                        <div class="sq-r" style="border-left:3px solid #21A038">
+                            <div style="font-weight:600;font-size:13px;margin-bottom:4px">comfort</div>
+                            <div style="font-size:11px;color:var(--mu);margin-bottom:6px">
+                                <span class="bdg bdg-ci">room_class</span>
+                                <span style="margin-left:8px">52 синонимов</span>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                                <span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">комфорт</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">comfort</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">улучшенный</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">повышенной комфортности</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">superior</span>
+                                <span style="font-size:11px;color:var(--lt)">+ещё 44</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="sq" style="margin-bottom:10px">
+                    <div class="sq-body">
+                        <div class="sq-r" style="border-left:3px solid #21A038">
+                            <div style="font-weight:600;font-size:13px;margin-bottom:4px">business</div>
+                            <div style="font-size:11px;color:var(--mu);margin-bottom:6px">
+                                <span class="bdg bdg-ci">room_class</span>
+                                <span style="margin-left:8px">49 синонимов</span>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                                <span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">бизнес</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">business</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">executive</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">деловой</span><span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">корпоративный</span>
+                                <span style="font-size:11px;color:var(--lt)">+ещё 41</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+      <div>
+        <div style='font-weight:600;font-size:13px;color:var(--r);margin-bottom:10px'>⚠ Наименьшее число синонимов</div>
+        <div id='poorest-section'>
+                <div class="sq" style="margin-bottom:10px">
+                    <div class="sq-body">
+                        <div class="sq-r" style="border-left:3px solid #d0021b">
+                            <div style="font-weight:600;font-size:13px;margin-bottom:4px">д. Рушиново</div>
+                            <div style="font-size:11px;color:var(--mu);margin-bottom:6px">
+                                <span class="bdg bdg-ci">city</span>
+                                <span style="margin-left:8px">1 синонимов</span>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                                <span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">деревня Рушиново</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="sq" style="margin-bottom:10px">
+                    <div class="sq-body">
+                        <div class="sq-r" style="border-left:3px solid #d0021b">
+                            <div style="font-weight:600;font-size:13px;margin-bottom:4px">д. Медведево</div>
+                            <div style="font-size:11px;color:var(--mu);margin-bottom:6px">
+                                <span class="bdg bdg-ci">city</span>
+                                <span style="margin-left:8px">1 синонимов</span>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                                <span class="syn-tag" style="background:var(--wh);border:1px solid var(--br);border-radius:14px;padding:2px 9px;font-size:12px">деревня Медведево</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Vector Search (optional) -->
+  
+
+</div>
+
+<footer>hotels_dictionaries_23032026 · 2026-03-26 16:08 · GigaChat EmbeddingsGigaR</footer>
+
+<script>
+  // Report data
+  const R = {&#34;metadata&#34;: {&#34;generated_at&#34;: &#34;2026-03-26T16:08:32.716740&#34;, &#34;collection_name&#34;: &#34;hotels_dictionaries_23032026&#34;, &#34;total_points&#34;: 3315, &#34;points_analyzed&#34;: 3315, &#34;elapsed_sec&#34;: 0.78, &#34;embedding_model&#34;: &#34;GigaChat EmbeddingsGigaR&#34;}, &#34;total&#34;: 3315, &#34;all_categories&#34;: [&#34;city&#34;, &#34;accommodation&#34;, &#34;hotel_amenity&#34;, &#34;room_amenity&#34;, &#34;room_class&#34;], &#34;fill_summary&#34;: {&#34;key&#34;: {&#34;filled&#34;: 3315, &#34;filled_pct&#34;: 100.0, &#34;empty&#34;: 0, &#34;null&#34;: 0}, &#34;category&#34;: {&#34;filled&#34;: 3315, &#34;filled_pct&#34;: 100.0, &#34;empty&#34;: 0, &#34;null&#34;: 0}, &#34;synonyms&#34;: {&#34;missing&#34;: 0, &#34;missing_pct&#34;: 0.0, &#34;empty_list&#34;: 0, &#34;empty_list_pct&#34;: 0.0, &#34;one_synonym&#34;: 7, &#34;one_pct&#34;: 0.21, &#34;many_synonyms&#34;: 3308, &#34;many_pct&#34;: 99.79, &#34;length_stats&#34;: {&#34;count&#34;: 3315, &#34;min&#34;: 1, &#34;max&#34;: 64, &#34;avg&#34;: 5.79, &#34;p50&#34;: 6}}}, &#34;category_stats&#34;: {&#34;city&#34;: {&#34;count&#34;: 3014, &#34;no_synonyms&#34;: 0, &#34;one_synonym&#34;: 6, &#34;many_synonyms&#34;: 3008, &#34;syn_length_stats&#34;: {&#34;count&#34;: 3014, &#34;min&#34;: 1, &#34;max&#34;: 6, &#34;avg&#34;: 5.66, &#34;p50&#34;: 6.0}}, &#34;accommodation&#34;: {&#34;count&#34;: 14, &#34;no_synonyms&#34;: 0, &#34;one_synonym&#34;: 0, &#34;many_synonyms&#34;: 14, &#34;syn_length_stats&#34;: {&#34;count&#34;: 14, &#34;min&#34;: 6, &#34;max&#34;: 6, &#34;avg&#34;: 6.0, &#34;p50&#34;: 6.0}}, &#34;hotel_amenity&#34;: {&#34;count&#34;: 44, &#34;no_synonyms&#34;: 0, &#34;one_synonym&#34;: 1, &#34;many_synonyms&#34;: 43, &#34;syn_length_stats&#34;: {&#34;count&#34;: 44, &#34;min&#34;: 1, &#34;max&#34;: 6, &#34;avg&#34;: 5.89, &#34;p50&#34;: 6.0}}, &#34;room_amenity&#34;: {&#34;count&#34;: 237, &#34;no_synonyms&#34;: 0, &#34;one_synonym&#34;: 0, &#34;many_synonyms&#34;: 237, &#34;syn_length_stats&#34;: {&#34;count&#34;: 237, &#34;min&#34;: 4, &#34;max&#34;: 6, &#34;avg&#34;: 5.97, &#34;p50&#34;: 6}}, &#34;room_class&#34;: {&#34;count&#34;: 6, &#34;no_synonyms&#34;: 0, &#34;one_synonym&#34;: 0, &#34;many_synonyms&#34;: 6, &#34;syn_length_stats&#34;: {&#34;count&#34;: 6, &#34;min&#34;: 49, &#34;max&#34;: 64, &#34;avg&#34;: 58.17, &#34;p50&#34;: 61.0}}}, &#34;synonym_distribution&#34;: [{&#34;count&#34;: 1, &#34;entries&#34;: 7, &#34;pct&#34;: 0.21}, {&#34;count&#34;: 4, &#34;entries&#34;: 423, &#34;pct&#34;: 12.76}, {&#34;count&#34;: 5, &#34;entries&#34;: 143, &#34;pct&#34;: 4.31}, {&#34;count&#34;: 6, &#34;entries&#34;: 2736, &#34;pct&#34;: 82.53}, {&#34;count&#34;: 49, &#34;entries&#34;: 1, &#34;pct&#34;: 0.03}, {&#34;count&#34;: 52, &#34;entries&#34;: 1, &#34;pct&#34;: 0.03}, {&#34;count&#34;: 60, &#34;entries&#34;: 1, &#34;pct&#34;: 0.03}, {&#34;count&#34;: 62, &#34;entries&#34;: 2, &#34;pct&#34;: 0.06}, {&#34;count&#34;: 64, &#34;entries&#34;: 1, &#34;pct&#34;: 0.03}], &#34;richest_entries&#34;: [{&#34;id&#34;: &#34;a287da01-e373-532a-9290-fa783109326c&#34;, &#34;key&#34;: &#34;luxury&#34;, &#34;category&#34;: &#34;room_class&#34;, &#34;synonyms&#34;: [&#34;люкс&#34;, &#34;luxury&#34;, &#34;deluxe&#34;, &#34;делюкс&#34;, &#34;де люкс&#34;, &#34;de luxe&#34;, &#34;suite&#34;, &#34;сюит&#34;, &#34;сьюит&#34;, &#34;джуниор сюит&#34;], &#34;syn_count&#34;: 64}, {&#34;id&#34;: &#34;85a3a14f-828a-57f7-bcac-f093759c7b39&#34;, &#34;key&#34;: &#34;economy&#34;, &#34;category&#34;: &#34;room_class&#34;, &#34;synonyms&#34;: [&#34;эконом&#34;, &#34;бюджет&#34;, &#34;базовый&#34;, &#34;простой&#34;, &#34;туристический&#34;, &#34;туркласс&#34;, &#34;койко-место&#34;, &#34;койка&#34;], &#34;syn_count&#34;: 62}, {&#34;id&#34;: &#34;95e079ce-882b-581a-b052-69c48779b748&#34;, &#34;key&#34;: &#34;vip&#34;, &#34;category&#34;: &#34;room_class&#34;, &#34;synonyms&#34;: [&#34;vip&#34;, &#34;ви-ай-пи&#34;, &#34;представительский&#34;, &#34;президентский&#34;, &#34;presidential&#34;, &#34;exclusive&#34;], &#34;syn_count&#34;: 62}, {&#34;id&#34;: &#34;b910e1a1-be76-537f-bea1-68270bdbed2b&#34;, &#34;key&#34;: &#34;comfort&#34;, &#34;category&#34;: &#34;room_class&#34;, &#34;synonyms&#34;: [&#34;комфорт&#34;, &#34;comfort&#34;, &#34;улучшенный&#34;, &#34;повышенной комфортности&#34;, &#34;superior&#34;], &#34;syn_count&#34;: 52}, {&#34;id&#34;: &#34;1e6e098b-7023-5aa2-9a7a-b2f59d0e3155&#34;, &#34;key&#34;: &#34;business&#34;, &#34;category&#34;: &#34;room_class&#34;, &#34;synonyms&#34;: [&#34;бизнес&#34;, &#34;business&#34;, &#34;executive&#34;, &#34;деловой&#34;, &#34;корпоративный&#34;], &#34;syn_count&#34;: 49}], &#34;poorest_entries&#34;: [{&#34;id&#34;: &#34;00137b74-3207-5d0f-ac6b-a61a537c85ea&#34;, &#34;key&#34;: &#34;д. Рушиново&#34;, &#34;category&#34;: &#34;city&#34;, &#34;synonyms&#34;: [&#34;деревня Рушиново&#34;], &#34;syn_count&#34;: 1}, {&#34;id&#34;: &#34;001fc0cc-8172-51c4-ad33-761076312268&#34;, &#34;key&#34;: &#34;д. Медведево&#34;, &#34;category&#34;: &#34;city&#34;, &#34;synonyms&#34;: [&#34;деревня Медведево&#34;], &#34;syn_count&#34;: 1}]};
+  
+  // Component functions (inlined from bundle)
+  
+  
+  // Initialize navigation and animations
+  document.addEventListener('DOMContentLoaded', function() {
+    initNavigation();
+    animateBars();
+  });
+</script>
+
+</body>
+</html>
