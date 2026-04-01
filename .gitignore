@@ -1,2 +1,35 @@
-.idea
-node_modules
+```
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+dist/
+build/
+*.o
+*.obj
+*.out
+
+# Dependencies
+node_modules/
+venv/
+.venv/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# Maps
+*.map
+
+# Distribution files
+src/dist/
+```
